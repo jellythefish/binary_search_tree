@@ -1,0 +1,11 @@
+@import url(./__button/pseudocode__button.css);
+
+.pseudocode {
+    position: absolute;
+    width: 386px;
+    height: 270px;
+    right: -386px;
+    top: 388px;
+    background: #FBE69C;
+    border-radius: 8px;
+}

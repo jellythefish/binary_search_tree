@@ -1,0 +1,13 @@
+@import url(./_off/avl__title_off.css);
+
+.avl__title {
+    margin: 0 0 0 18px;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: #FFFFFF;
+    -webkit-text-stroke: 0.25px #FCD462;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.35);
+}

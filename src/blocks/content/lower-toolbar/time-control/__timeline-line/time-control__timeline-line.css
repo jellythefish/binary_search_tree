@@ -1,0 +1,8 @@
+.time-control__timeline-line {
+    position: absolute;
+    z-index: 2;
+    width: 20%;
+    height: 10px;
+    background: #FFC778;
+    border-radius: 41px;
+}

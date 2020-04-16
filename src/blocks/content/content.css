@@ -1,0 +1,7 @@
+@import url(./upper-toolbar/upper-toolbar.css);
+@import url(./middle-part/middle-part.css);
+@import url(./lower-toolbar/lower-toolbar.css);
+
+.content {
+    padding-top: 9px;
+}

@@ -1,0 +1,38 @@
+@import url(../vendor/normalize.css);
+@import url(../vendor/fonts.css);
+@import url(../blocks/header/header.css);
+@import url(../blocks/menu/menu.css);
+@import url(../blocks/content/content.css);
+
+.page-wrapper {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+    background-image: url('../images/background-opacity-50.png');
+    background-repeat: repeat;
+}
+
+.page {
+    position: relative;
+    overflow: hidden;
+    width: 1440px;
+    min-height: 100vh;
+    margin: auto;
+    background-image: url('../images/background.svg');
+    background-repeat: repeat;
+}
+
+@media screen and (max-height: 900px) {
+    .page {
+        height: 900px;
+    }
+}
+
+button {
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    outline-style: none;
+    background-color: transparent;
+}

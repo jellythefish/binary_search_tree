@@ -1,0 +1,6 @@
+@import url(./__circle/switch__circle.css);
+@import url(./__rectangle/switch__rectangle.css);
+
+.switch {
+    position: relative;
+}

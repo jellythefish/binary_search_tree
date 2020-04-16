@@ -1,0 +1,22 @@
+@import url(./_disabled/avl__balance-button_disabled.css);
+
+.avl__balance-button {
+    width: 126px;
+    height: 28px;
+    margin: 0 0 0 12px;
+    background-color: rgba(89, 231, 39, 0.52);
+    box-shadow: inset -4px 4px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 7px;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: center;
+    color: #FFFFFF;
+    transition: background-color 0.4s linear 0s;
+}
+
+.avl__balance-button:hover {
+    background-color: rgba(89, 231, 39, 1);
+}

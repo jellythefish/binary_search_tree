@@ -1,0 +1,28 @@
+.task__button {
+    display: flex;
+    height: 41px;
+    align-items: center;
+    padding-left: 9px;
+    box-sizing: border-box;
+    background: linear-gradient(180deg, #E7D0AD 94.79%, rgba(231, 208, 173, 0) 100%);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    color: #FFFFFF;
+    -webkit-text-stroke: 0.3px #A47C64;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.task__button:hover + .task__container {
+    display: flex;
+}
+
+.task:hover .task__button-image {
+    transform: rotate(-180deg);
+}
+

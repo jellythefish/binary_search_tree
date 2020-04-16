@@ -1,0 +1,13 @@
+@import url(./_additional-ops/task__container_additional-ops.css);
+@import url(./_problems/task__container_problems.css);
+@import url(./_traversal/task__container_traversal.css);
+
+.task__container {
+    display: none;
+    position: absolute;
+    flex-direction: column;
+}
+
+.task__container:hover {
+    display: flex;
+}

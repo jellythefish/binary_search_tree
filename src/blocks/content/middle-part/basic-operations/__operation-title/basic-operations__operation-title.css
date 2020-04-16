@@ -1,0 +1,13 @@
+@import url(./_apple/basic-operations__operation-title_apple.css);
+@import url(./_cross/basic-operations__operation-title_cross.css);
+@import url(./_leaf/basic-operations__operation-title_leaf.css);
+
+.basic-operations__operation-title {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 27px;
+    color: #FFFFFF;
+    cursor: pointer;
+}

@@ -1,0 +1,8 @@
+.task__button-image {
+    margin: 0 9px 0 6px;
+    transition: transform 0.4s ease-out 0s;
+}
+
+.task__button-image:hover {
+    transform: rotate(180deg);
+}

@@ -1,0 +1,9 @@
+.time-control__speed-pointer {
+    position: absolute;
+    top: -5px;
+    left: 50px;
+    width: 7px;
+    height: 14px;
+    background: #FFFFFF;
+    border-radius: 3px;
+}

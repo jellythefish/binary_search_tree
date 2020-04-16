@@ -1,0 +1,10 @@
+@import url(./basic-operations/basic-operations.css);
+@import url(./pseudocode/pseudocode.css);
+@import url(./theory/theory.css);
+@import url(./canvas/canvas.css);
+
+.middle-part {
+    position: relative;
+    margin: 27px 0 0 0;
+    min-height: 660px;
+}

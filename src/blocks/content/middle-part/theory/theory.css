@@ -1,0 +1,16 @@
+@import url(./__button/theory__button.css);
+@import url(./__content/theory__content.css);
+
+.theory {
+    position: absolute;
+    top: 0;
+    right: -397px;
+    width: 397px;
+    height: 641px;
+    display: flex;
+    z-index: 3;
+    justify-content: center;
+    align-items: center;
+    background: rgba(207, 136, 89, 0.2);
+    border-radius: 15px;
+}

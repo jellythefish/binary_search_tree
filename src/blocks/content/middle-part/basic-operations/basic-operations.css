@@ -1,0 +1,20 @@
+@import url(./__img/basic-operations__img.css);
+@import url(./__input/basic-operations__input.css);
+@import url(./__operation/basic-operations__operation.css);
+@import url(./__operation-title/basic-operations__operation-title.css);
+@import url(./__title/basic-operations__title.css);
+@import url(./__avl-status/basic-operations__avl-status.css);
+@import url(./__button/basic-operations__button.css);
+
+.basic-operations {
+    position: absolute;
+    top: 0px;
+    left: -290px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 290px;
+    height: 580px;
+    background: rgba(255, 255, 255, 0.38);
+    border-radius: 15px;
+}

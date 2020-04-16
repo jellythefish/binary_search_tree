@@ -1,0 +1,10 @@
+@import url(./avl/avl.css);
+@import url(./github-link/github-link.css);
+@import url(./switch/switch.css);
+@import url(./task/task.css);
+@import url(./tasks-list/tasks-list.css);
+
+.upper-toolbar {
+    position: relative;
+    display: flex;
+}

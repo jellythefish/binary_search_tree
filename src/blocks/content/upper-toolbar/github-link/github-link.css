@@ -1,0 +1,21 @@
+@import url(./__logo/github-link__logo.css);
+@import url(./__title/github-link__title.css);
+
+.github-link {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 7px;
+    right: -22px;
+    width: 142px;
+    height: 49px;
+    background-color: rgba(211, 180, 132, 0.5);
+    border-radius: 20px;
+    z-index: 1;
+    transition: background-color 0.4s ease-out 0s;
+}
+
+.github-link:hover {
+    background-color: rgba(211, 180, 132, 0.9);
+}

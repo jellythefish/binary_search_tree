@@ -1,0 +1,11 @@
+.task__container_problems {
+    width: 243px;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    -webkit-text-stroke: 0.7px #A47C64;
+    text-shadow: 0px 5px 4px rgba(0, 0, 0, 0.15);
+}

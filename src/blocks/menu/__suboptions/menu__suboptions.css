@@ -1,0 +1,15 @@
+@import url(./_is-opened/menu__suboptions_is-opened.css);
+
+.menu__suboptions {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    top: 80px;
+    left: 288px;
+    width: 153px;
+    height: 162px;
+    z-index: 5;
+    background-color: #C3A27B;
+    border-radius: 9px;
+}

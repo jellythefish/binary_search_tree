@@ -1,0 +1,6 @@
+.menu__arrow {
+    position: absolute;
+    top: 56px;
+    left: 31px;
+    z-index: 5;
+}

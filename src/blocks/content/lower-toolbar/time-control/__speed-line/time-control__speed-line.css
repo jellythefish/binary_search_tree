@@ -1,0 +1,7 @@
+.time-control__speed-line {
+    width: 105px;
+    height: 4px;
+    background: #CF8859;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 41px;
+}

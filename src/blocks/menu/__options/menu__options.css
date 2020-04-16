@@ -1,0 +1,14 @@
+.menu__options {
+    display: flex;
+    flex-direction: column;
+    padding-top: 23px;
+    box-sizing: border-box;
+    position: absolute;
+    top: 70px;
+    left: 0px;
+    width: 288px;
+    z-index: 5;
+    height: 191px;
+    background-color: #C3A27B;
+    border-radius: 23px;
+}

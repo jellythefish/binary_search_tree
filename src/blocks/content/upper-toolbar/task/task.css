@@ -1,0 +1,16 @@
+@import url(./__container/task__container.css);
+@import url(./__option/task__option.css);
+@import url(./__button/task__button.css);
+@import url(./__button-image/task__button-image.css);
+@import url(./__option-image/task__option-image.css);
+
+.task {
+    height: 41px;
+    position: relative;
+    z-index: 4;
+    margin-right: 12px;
+}
+
+.task:last-of-type {
+    margin: 0;
+}

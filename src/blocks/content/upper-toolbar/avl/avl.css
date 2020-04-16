@@ -1,0 +1,12 @@
+@import url(./__balance-button/avl__balance-button.css);
+@import url(./__led/avl__led.css);
+@import url(./__status-message/avl__status-message.css);
+@import url(./__status/avl__status.css);
+@import url(./__switch-state/avl__switch-state.css);
+@import url(./__title/avl__title.css);
+
+.avl {
+    width: auto;
+    margin: 0 0 0 48px;
+    display: inline-block;
+}

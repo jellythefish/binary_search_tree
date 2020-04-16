@@ -1,0 +1,7 @@
+.task__option_problems {
+    height: 64px !important;
+    font-size: 14px !important;
+    line-height: 17px !important;
+    -webkit-text-stroke: 0.5px #A47C64 !important;
+    text-align: left;
+}

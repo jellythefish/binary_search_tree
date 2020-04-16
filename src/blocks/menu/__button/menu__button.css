@@ -1,0 +1,14 @@
+@import url(./_option/menu__button_option.css);
+@import url(./_suboption/menu__button_suboption.css);
+
+.menu__button {
+    color: #FFFFFF;
+    text-align: center;
+    background-color: rgba(196, 196, 196, 0.5);
+    border: 1px solid rgba(239, 228, 221, 0.64);
+    transition: background-color 0.4s linear 0s;
+}
+
+.menu__button:hover {
+    background-color: rgba(196, 196, 196, 1);
+}

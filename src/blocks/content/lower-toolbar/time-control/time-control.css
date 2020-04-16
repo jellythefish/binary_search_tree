@@ -1,0 +1,15 @@
+@import url(./__button/time-control__button.css);
+@import url(./__buttons/time-control__buttons.css);
+@import url(./__panel/time-control__panel.css);
+@import url(./__speed-line/time-control__speed-line.css);
+@import url(./__speed-pointer/time-control__speed-pointer.css);
+@import url(./__speed-switch/time-control__speed-switch.css);
+@import url(./__speed-title/time-control__speed-title.css);
+@import url(./__speed/time-control__speed.css);
+@import url(./__timeline-line/time-control__timeline-line.css);
+@import url(./__timeline-pointer/time-control__timeline-pointer.css);
+@import url(./__timeline/time-control__timeline.css);
+
+.time-control {
+    margin-left: 240px;
+}

@@ -1,0 +1,7 @@
+@import url(./_apple/basic-operations__input_apple.css);
+@import url(./_leaf/basic-operations__input_leaf.css);
+
+.basic-operations__input {
+    width: 40px;
+    position: absolute;
+}

@@ -1,0 +1,12 @@
+.clear-button__title {
+    margin: 16px 0 3px;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 15px;
+    text-align: center;
+    color: #FFFFFF;
+    -webkit-text-stroke: 0.3px #5F422F;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}

@@ -622,7 +622,8 @@ template {
 }
 
 .avl__led {
-    margin-left: 8px;
+    width: 9px;
+    height: 9px;
 }
 .avl__status-message {
     width: 271px;
@@ -637,6 +638,7 @@ template {
 }
 .avl__status {
     display: flex;
+    align-items: center;
 }
 .avl__switch-state {
     display: flex;
@@ -820,6 +822,7 @@ template {
     margin: 0 9px 0 0
 }
 .task {
+    height: 41px;
     position: relative;
     z-index: 4;
     margin-right: 12px;
@@ -850,8 +853,8 @@ template {
     transform: rotate(136deg);
 }
 .basic-operations__img_sun {
-    width: 115.62px;
-    height: 115.62px;
+    width: 100.62px;
+    height: 100.62px;
 }
 
 .basic-operations__input_apple {

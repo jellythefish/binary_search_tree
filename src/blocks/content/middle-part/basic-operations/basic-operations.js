@@ -42,5 +42,29 @@ function processWindowPosition() {
     }
 }
 
+// const insertButton = document.querySelector(".basic-operations__operation-title_leaf");
+// const findButton = document.querySelector(".basic-operations__operation-title_apple");
+// const removeButton = document.querySelector(".basic-operations__operation-title_cross");
+// function insertButtonHandler(event, tree) {
+//     const insertValue = document.querySelector(".basic-operations__input_leaf").textContent; // to validate input later
+//     tree.insert(new TreeNode(insertValue));
+// }
+// function findButtonHandler(event, tree) {
+//     const findValue = document.querySelector(".basic-operations__input_apple").textContent; // to validate input later
+//     const node = tree.find(findValue);
+//     console.log(node);
+// }
+// function removeButtonHandler(event, tree) {
+//     document.querySelector('#canvas').addEventListener('click', function(event) {
+//         if (event.currentTarget.classList.contains("node")) {
+//             tree.remove(event.currentTarget.getAttribute('id'));
+//             // render();
+//         }
+//     });
+// }
+// insertButton.addEventListener('click', insertButtonHandler(event, tree));
+// findButton.addEventListener('click', findButtonHandler(event, tree));
+// removeButton.addEventListener('click', removeButtonHandler(event, tree));
+
 export { basicOpsWindow, basicOpsButton, initialXBasOp, newXBasOp, basicOpsButtonMoved, mousemoveBasicOpsButtonHandler,
     mousedownBasicOpsButtonHandler, mouseupBasicOpsButtonHandler, processWindowPosition}

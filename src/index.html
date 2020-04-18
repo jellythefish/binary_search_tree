@@ -14,18 +14,34 @@
                 <button class="header__menu-button"></button>
                 <menu class="menu">
                     <img src="<%= require('./images/menu-arrow.svg').default %>" alt="menu arrow" class="menu__arrow">
-                    <div class="menu__options">
-                        <button class="menu__button menu__button_option">Создать дерево...</button>
-                        <button class="menu__button menu__button_option">Сохранить конфигурацию</button>
-                        <button class="menu__button menu__button_option">Загрузить конфигурацию...</button>
-                    </div>
-                    <div class="menu__suboptions">
-                        <button class="menu__button menu__button_suboption">Пустое</button>
-                        <button class="menu__button menu__button_suboption">Случайное</button>
-                        <button class="menu__button menu__button_suboption">Худший случай</button>
-                        <button class="menu__button menu__button_suboption">Средний случай</button>
-                        <button class="menu__button menu__button_suboption">Лучший случай</button>
-                    </div>
+                    <ul class="menu__options">
+                        <li class="menu__option-item">
+                            <button class="menu__button menu__button_option">Создать дерево...</button>
+                        </li>
+                        <li class="menu__option-item">
+                            <button class="menu__button menu__button_option">Сохранить конфигурацию</button>
+                        </li>
+                        <li class="menu__option-item">
+                            <button class="menu__button menu__button_option">Загрузить конфигурацию...</button>
+                        </li>
+                    </ul>
+                    <ul class="menu__suboptions">
+                        <li class="menu__suboption-item">
+                            <button class="menu__button menu__button_suboption">Пустое</button>
+                        </li>
+                        <li class="menu__suboption-item">
+                            <button class="menu__button menu__button_suboption">Случайное</button>
+                        </li>
+                        <li class="menu__suboption-item">
+                            <button class="menu__button menu__button_suboption">Худший случай</button>
+                        </li>
+                        <li class="menu__suboption-item">
+                            <button class="menu__button menu__button_suboption">Средний случай</button>
+                        </li>
+                        <li class="menu__suboption-item">
+                            <button class="menu__button menu__button_suboption">Лучший случай</button>
+                        </li>
+                    </ul>
                 </menu>
                 <a class="header__link" href="#">Как пользоваться</a>
                 <h1 class="header__title">Двоичное дерево поиска</h1>
@@ -52,77 +68,92 @@
                             <h4 class="avl__title">AVL-Дерево</h4>
                         </div>
                     </div>
-    
                     <div class="tasks-list">
-                        
                         <div class="task">
                             <button class="task__button">
                                 Операции обхода дерева
                                 <img src="<%= require('./images/tasks-arrow-down.svg').default %>" class="task__button-image" alt="arrow-down">
                             </button>
-                            <div class="task__container task__container_traversal">
-                                <button class="task__option">
-                                    <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
-                                    Inorder traversal
-                                </button>
-                                <button class="task__option">
-                                    <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
-                                    Preorder traversal
-                                </button>
-                                <button class="task__option">
-                                    <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
-                                    Postorder traversal
-                                </button>
-                            </div>
+                            <ul class="task__container task__container_traversal">
+                                <li class="task__option-item">
+                                    <button class="task__option">
+                                        <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
+                                        Inorder traversal
+                                    </button>
+                                </li>
+                                <li class="task__option-item">
+                                    <button class="task__option">
+                                        <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
+                                        Preorder traversal
+                                    </button>
+                                </li>
+                                <li class="task__option-item">
+                                    <button class="task__option">
+                                        <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
+                                        Postorder traversal
+                                    </button>
+                                </li>
+                            </ul>
                         </div>
-    
                         <div class="task">
                             <button class="task__button">
                                 Дополнительные операции
                                 <img src="<%= require('./images/tasks-arrow-down.svg').default %>" class="task__button-image" alt="arrow-down">
                             </button>
-                            <div class="task__container task__container_additional-ops">
-                                <button class="task__option">
-                                    <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
-                                    Поиск минимума
-                                </button>
-                                <button class="task__option">
-                                    <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
-                                    Поиск максимума
-                                </button>
-                                <button class="task__option">
-                                    <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
-                                    Поиск следующего элемента
-                                </button>
-                                <button class="task__option">
-                                    <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
-                                    Поиск предыдущего элемента
-                                </button>
-                            </div>
+                            <ul class="task__container task__container_additional-ops">
+                                <li class="task__option-item">
+                                    <button class="task__option">
+                                        <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
+                                        Поиск минимума
+                                    </button>
+                                </li>
+                                <li class="task__option-item">
+                                    <button class="task__option">
+                                        <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
+                                        Поиск максимума
+                                    </button>
+                                </li>
+                                <li class="task__option-item">
+                                    <button class="task__option">
+                                        <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
+                                        Поиск следующего элемента
+                                    </button>
+                                </li>
+                                <li class="task__option-item">
+                                    <button class="task__option">
+                                        <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
+                                        Поиск предыдущего элемента
+                                    </button>
+                                </li>                                
+                            </ul>
                         </div>
-    
                         <div class="task">
                             <button class="task__button">
                                 Задачи
                                 <img src="<%= require('./images/tasks-arrow-down.svg').default %>" class=task__button-image alt="arrow-down">
                             </button>
                             <div class="task__container task__container_problems">
-                                <button class="task__option task__option_problems">
-                                    <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
-                                    Проверка дерева на принадлежность к двоичным деревьям поиска
+                                <li class="task__option-item">
+                                    <button class="task__option task__option_problems">
+                                        <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
+                                        Проверка дерева на принадлежность к двоичным деревьям поиска
                                     </button>
-                                <button class="task__option task__option_problems">
-                                    <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
-                                    Поиск максимального двоичного дерева поиска
+                                </li>
+                                <li class="task__option-item">
+                                    <button class="task__option task__option_problems">
+                                        <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
+                                        Поиск максимального двоичного дерева поиска
                                     </button>
-                                <button class="task__option task__option_problems">
-                                    <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
-                                    Восстановление дерева по результату обхода Preorder traversal
+                                </li>
+                                <li class="task__option-item">
+                                    <button class="task__option task__option_problems">
+                                        <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
+                                        Восстановление дерева по результату обхода Preorder traversal
                                     </button>
+                                </li>
                             </div>
                         </div>
                     </div>
-    
                     <a href="https://github.com/jellythefish/binary_search_tree" target="_blank" class="github-link">
                         <h2 class="github-link__title">View on github</h2>
                         <img src="<%= require('./images/github-logo.png').default %>" class="github-link__logo" alt="github-logo">

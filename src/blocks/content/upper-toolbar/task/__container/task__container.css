@@ -6,6 +6,7 @@
     display: none;
     position: absolute;
     flex-direction: column;
+    padding: 0;
 }
 
 .task__container:hover {

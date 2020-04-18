@@ -36,3 +36,7 @@ button {
     outline-style: none;
     background-color: transparent;
 }
+
+li {
+    list-style-type: none
+}

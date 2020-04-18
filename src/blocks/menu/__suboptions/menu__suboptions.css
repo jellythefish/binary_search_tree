@@ -10,6 +10,8 @@
     width: 153px;
     height: 162px;
     z-index: 5;
+    margin: 0;
+    padding: 0;
     background-color: #C3A27B;
     border-radius: 9px;
 }

@@ -3,7 +3,6 @@ import "./vendor/snap.svg-min.js";
 import "./images/sun.svg";
 import "./images/branch-left.svg"
 import "./images/branch-right.svg"
-import autoprefixer from "autoprefixer";
 import * as Menu from './blocks/menu/menu.js';
 import * as Switch from './blocks/content/upper-toolbar/switch/switch.js';
 import * as BasicOperations from './blocks/content/middle-part/basic-operations/basic-operations.js';
@@ -14,7 +13,6 @@ import * as Timeline from './blocks/content/lower-toolbar/time-control/__timelin
 import Tree from './scripts/Tree';
 import TreeNode from './scripts/TreeNode';
 import TreeCanvas from "./scripts/TreeCanvas";
-
 
 Menu.menuButton.addEventListener('click', Menu.menuButtonHandler);
 Menu.createTreeButton.addEventListener('click', Menu.menuCreateTreeButtonHandler);
@@ -36,7 +34,6 @@ window.addEventListener('mouseup', Speed.mouseupSpeedPointerHandler);
 
 Timeline.timelinePointer.addEventListener('mousedown', Timeline.mousedownTimelinePointerHandler);
 window.addEventListener('mouseup', Timeline.mouseupTimelinePointerHandler);
-
 
 
 // tree initializing

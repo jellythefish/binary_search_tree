@@ -86,7 +86,7 @@ export default class TreeCanvas {
         const length = Math.sqrt((y1 - y2) ** 2 + (x1 - x2) ** 2);
         const angle = Number.parseInt(Math.atan((y2 - y1) / (x2 - x1)) * 180 / 3.14159) - this._edgeDegreeAlignmenet; 
 
-        const edge = this._canvas.image(`/images/branch-${type}.svg`, centerX + edgeWidth / 2, 
+        const edge = this._canvas.image(`./images/branch-${type}.svg`, centerX + edgeWidth / 2, 
         centerY - length / 2 + this._edgeVerticalAlignment, edgeWidth, length);
         edge.insertBefore(parentNode.element); // for edge not to overflow node
 

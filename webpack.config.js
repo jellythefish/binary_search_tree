@@ -28,7 +28,8 @@ module.exports = {
                 test: /\.css$/,
                 use: [
                     MiniCssExtractPlugin.loader, 
-                    'css-loader', 
+                    'css-loader',
+                    'postcss-loader',
                 ]
             },
             {
@@ -55,14 +56,14 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: 'style.[contenthash].css'
         }),
-        // new OptimizeCssAssetsPlugin({
-        //     assetNameRegExp: /\.css$/g,
-        //     cssProcessor: require('cssnano'),
-        //     cssProcessorPluginOptions: {
-        //             preset: ['default'],
-        //     },
-        //     canPrint: true
-        // }),
+        new OptimizeCssAssetsPlugin({
+            assetNameRegExp: /\.css$/g,
+            cssProcessor: require('cssnano'),
+            cssProcessorPluginOptions: {
+                    preset: ['default'],
+            },
+            canPrint: true
+        }),
         new HtmlWebpackPlugin({
             inject: false,
             template: './src/index.html',

@@ -1,5 +1,6 @@
 export default class TreeNode {
     constructor(key) {
+        if (!key) throw Error('Не указан ключ вершины')
         this.key = key;
         this.type = null;
         this.leftChild = null;

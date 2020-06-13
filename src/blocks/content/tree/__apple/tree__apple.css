@@ -1,0 +1,12 @@
+@keyframes grow-apple {
+    from {width: 0px; height: 0px;}
+    to {width: 50px; height: 50px;}
+}
+
+.tree__apple {
+    width: 0px;
+    height: 0px;
+    animation: grow-apple 3s ease 3s forwards;
+}
+
+

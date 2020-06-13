@@ -1,37 +1,60 @@
 export default class Tree {
-    constructor(root, treeCanvas) {
+    constructor(root, treeCanvas, pseudocode) {
         this.root = root;
         this._treeCanvas = treeCanvas;
+        this._pseudocode = pseudocode;
     }
 
-    insert(node, currentNode = this.root) {
+    async insert(node, currentNode = this.root) {
+        this._treeCanvas.highlightCurrentNode(currentNode);
         if (!node) {
+            this._treeCanvas.unhighlightCurrentNode(currentNode);
             throw new Error("Не указана вершина для вставки");
         }
+        await this._pseudocode.step(0, 0);;
         if (!this.root) {
             this.root = node;
             this.root.type = "root";
             this._treeCanvas.renderElement(this.root);
+            await this._pseudocode.step(1, 0);
+            await this._pseudocode.step(10, 1);
+            this._treeCanvas.unhighlightCurrentNode(currentNode);
             return;
         }
+        await this._pseudocode.step(2, 0);
         if (node.key < currentNode.key) {
+            await this._pseudocode.step(3, 0);
             if (!currentNode.leftChild) {
                 currentNode.leftChild = node;
                 currentNode.leftChild.type = "node";
                 currentNode.leftChild.parent = currentNode;
                 this._treeCanvas.renderElement(currentNode, "left");
+                await this._pseudocode.step(4, 0);
+                await this._pseudocode.step(10, 1);
+                this._treeCanvas.unhighlightCurrentNode(currentNode);
             } else {
+                await this._pseudocode.step(5, 0);
+                this._treeCanvas.unhighlightCurrentNode(currentNode);
                 this.insert(node, currentNode.leftChild);
             }
         } else if (node.key === currentNode.key) {
+            await this._pseudocode.step(6, 1);
+            await this._pseudocode.step(10, 1);
+            this._treeCanvas.unhighlightCurrentNode(currentNode);
             throw new Error("Данный элемент уже присутствует в дереве");
         } else {
+            await this._pseudocode.step(7, 0);
             if (!currentNode.rightChild) {
                 currentNode.rightChild = node;
                 currentNode.rightChild.type = "node";
                 currentNode.rightChild.parent = currentNode;
                 this._treeCanvas.renderElement(currentNode, "right");
+                await this._pseudocode.step(8, 0);
+                await this._pseudocode.step(10, 1);
+                this._treeCanvas.unhighlightCurrentNode(currentNode);
             } else {
+                await this._pseudocode.step(9, 0);
+                this._treeCanvas.unhighlightCurrentNode(currentNode);
                 this.insert(node, currentNode.rightChild);
             }
         }

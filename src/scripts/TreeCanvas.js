@@ -5,6 +5,7 @@ export default class TreeCanvas {
         this._canvasHeight = 660;
         this._centerAlignmentOfNode = 12.5;
         this._verticalDistance = 100;
+        this._rootY = 20;
         this._sunWidth = 70;
         this._sunHeight = 70;
         this._appleWidth = 50;
@@ -18,12 +19,16 @@ export default class TreeCanvas {
         this._edgeVerticalAlignment = 25;
     }
 
+    clearCanvas() {
+        this._canvas.clear();
+    }
+
     renderTree(currentNode) {
         if (!currentNode) {
-            return this._canvas.clear();
+            return this.clearCanvas();
         }
         if (currentNode.type === 'root') {
-            this._canvas.clear();
+            this.clearCanvas();
             this.renderElement(currentNode);
         } else {
             currentNode === currentNode.parent.rightChild ? this.renderElement(currentNode.parent, "right") 
@@ -35,7 +40,7 @@ export default class TreeCanvas {
 
     renderElement(parentNode, childSide) {
         if (!childSide) {
-            parentNode.element = this.insertNode(((this._canvasWidth - this._sunWidth) / 2), 0, parentNode.key, "sun");
+            parentNode.element = this.insertNode(((this._canvasWidth - this._sunWidth) / 2), this._rootY, parentNode.key, "sun");
             return;
         }
         let parentY = Number.parseInt(parentNode.element.getAttribute('y'));
@@ -58,15 +63,17 @@ export default class TreeCanvas {
     insertNode(x, y, key, type) {
         let node, img, text;
         if (type === "apple") {
-            img = this._canvas.paper.image("./images/apple.svg", 0, 0, this._appleWidth, this._appleHeight);
             node = this._canvas.paper.svg(x + this._centerAlignmentOfNode, y, this._appleWidth, this._appleHeight);
+            img = this._canvas.paper.image("./images/apple.svg", 0, 0, this._appleWidth, this._appleHeight);
+            img.attr({ class: "tree__apple" });
             text = this._canvas.paper.text(this._nodeKeyPositionXApple, this._nodeKeyPositionYApple, key);
         } else {
             img = this._canvas.paper.image("./images/sun.svg", 0, 0, this._sunWidth, this._sunHeight);
+            img.attr({ class: "tree__sun" });
             node = this._canvas.paper.svg(x, y, this._sunWidth, this._sunHeight);
             text = this._canvas.paper.text(this._nodeKeyPositionXSun, this._nodeKeyPositionYSun, key);
         }
-        node.attr({ id: key, class: "node"});
+        node.attr({ id: key, class: "node", style: "overflow: auto;" });
         text.attr({
             "class": "tree__node-key",
             "fill": "white",
@@ -83,8 +90,8 @@ export default class TreeCanvas {
     insertEdge(x1, y1, x2, y2, edgeWidth, parentNode, key, type) { // x_1, y_1 is for parent, x_2, y_2 is for child
         const centerX = (x1 + x2) / 2;
         const centerY = (y1 + y2) / 2;
-        const length = Math.sqrt((y1 - y2) ** 2 + (x1 - x2) ** 2);
-        const angle = Number.parseInt(Math.atan((y2 - y1) / (x2 - x1)) * 180 / 3.14159) - this._edgeDegreeAlignmenet; 
+        const length = Math.round(Math.sqrt((y1 - y2) ** 2 + (x1 - x2) ** 2));
+        const angle = Number.parseInt(Math.atan((y2 - y1) / (x2 - x1)) * 180 / 3.14159) + this._edgeDegreeAlignmenet; 
 
         const edge = this._canvas.image(`./images/branch-${type}.svg`, centerX + edgeWidth / 2, 
         centerY - length / 2 + this._edgeVerticalAlignment, edgeWidth, length);
@@ -94,5 +101,68 @@ export default class TreeCanvas {
         if (x2 > x1) newAngle = angle - 180; // flipping the edge if it connects right child
         edge.attr({ id: `e${key}`, class: "edge" });
         edge.transform(`r${newAngle}`);
+
+        let elem = edge.node; 
+        elem.setAttribute('width', 0);
+        elem.setAttribute('height', 0);
+        let width = 0;
+        let height = 0; 
+    
+        let widthInterval = setInterval(widthFrame, 10);
+        function widthFrame() {
+            const nowWidth = Number.parseInt(elem.getAttribute('width'));
+            if (nowWidth === edgeWidth) {
+                clearInterval(widthInterval);
+            } else {
+                width++; 
+                elem.setAttribute('width', width); 
+            }
+        }
+        let heightInterval = setInterval(heightFrame, 10);
+        function heightFrame() {
+            const nowHeight = Number.parseInt(elem.getAttribute('height'));
+            if (nowHeight === length) {
+                clearInterval(heightInterval);
+            } else {
+                height++; 
+                elem.setAttribute('height', height); 
+            }
+        }
+    }
+
+    highlightCurrentNode(node) {
+        if (!node) return; 
+        const svgElement = document.getElementById(`${node.key}`);
+        const snapObject = Snap(svgElement);
+        const size = svgElement.getAttribute('width');
+        const defs = svgElement.getElementsByTagName('defs')[0];
+        defs.innerHTML = `
+            <filter id="f1" x="-30%" y="-30%" width="200%" height="200%"> 
+                <feGaussianBlur in="SourceGraphic" stdDeviation="3">
+                </feGaussianBlur> 
+            </filter>
+        `;
+        let cx, cy, radius;
+        if (size === '50') {
+            cx = 25;
+            cy = 30;
+            radius = size / 2 + 5;
+        } else {
+            cx = size / 2;
+            cy = size / 2;
+            radius = size / 2;
+        }
+        const highlightCircle = this._canvas.circle(cx, cy, radius);
+        highlightCircle.attr({ filter: 'url(#f1)', fill: "#68432D" });
+        highlightCircle.prependTo(snapObject);
+    }
+
+    unhighlightCurrentNode(node) {
+        if (!node) return; 
+        const svgElement = document.getElementById(`${node.key}`);
+        console.log(svgElement);
+        const snapObject = Snap(svgElement);
+        svgElement.getElementsByTagName('circle')[0].remove();
+        // console.log(circle);
     }
 }

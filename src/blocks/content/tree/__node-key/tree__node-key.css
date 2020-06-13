@@ -1,8 +1,17 @@
+@keyframes grow-text {
+    from {
+        font-size: 0px;
+    }
+    to {
+        font-size: 15px;
+    }
+}
+
 .tree__node-key {
     font-family: Inter;
     font-style: normal;
     font-weight: 800;
-    font-size: 15px;
+    font-size: 0px;
     color: #FFF;
-    /* line-height: ; */
+    animation: grow-text 3s cubic-bezier(0.99,-0.02, 0.08, 0.9) 3s forwards;
 }

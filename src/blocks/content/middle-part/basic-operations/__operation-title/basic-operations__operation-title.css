@@ -1,6 +1,7 @@
 @import url(./_apple/basic-operations__operation-title_apple.css);
 @import url(./_cross/basic-operations__operation-title_cross.css);
 @import url(./_leaf/basic-operations__operation-title_leaf.css);
+@import url(./_delete-mode/basic-operations__operation-title_delete-mode.css);
 
 .basic-operations__operation-title {
     font-family: Inter;

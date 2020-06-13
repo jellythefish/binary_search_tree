@@ -1,11 +1,17 @@
 @import url(./__button/pseudocode__button.css);
+@import url(./__line/pseudocode__line.css);
 
 .pseudocode {
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     width: 386px;
-    height: 270px;
+    height: 330px;
+    padding: 0 12px;
+    box-sizing: border-box;
     right: -386px;
-    top: 388px;
+    top: 348px;
     background: #FBE69C;
     border-radius: 8px;
 }

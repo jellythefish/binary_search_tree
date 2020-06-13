@@ -7,12 +7,13 @@ import * as Menu from './blocks/menu/menu.js';
 import * as Switch from './blocks/content/upper-toolbar/switch/switch.js';
 import * as BasicOperations from './blocks/content/middle-part/basic-operations/basic-operations.js';
 import * as Theory from './blocks/content/middle-part/theory/theory.js';
-import * as Pseudocode from './blocks/content/middle-part/pseudocode/pseudocode.js';
+import * as PseudocodeElements from './blocks/content/middle-part/pseudocode/pseudocode.js';
 import * as Speed from './blocks/content/lower-toolbar/time-control/__speed/time-control__speed.js';
 import * as Timeline from './blocks/content/lower-toolbar/time-control/__timeline/time-control__timeline.js';
 import Tree from './scripts/Tree';
 import TreeNode from './scripts/TreeNode';
 import TreeCanvas from "./scripts/TreeCanvas";
+import Pseudocode from './scripts/Pseudocode';
 
 Menu.menuButton.addEventListener('click', Menu.menuButtonHandler);
 Menu.createTreeButton.addEventListener('click', Menu.menuCreateTreeButtonHandler);
@@ -26,8 +27,8 @@ window.addEventListener('mouseup', BasicOperations.mouseupBasicOpsButtonHandler)
 Theory.theoryButton.addEventListener('mousedown', Theory.mousedownTheoryButtonHandler);
 window.addEventListener('mouseup', Theory.mouseupTheoryButtonHandler);
 
-Pseudocode.pseudocodeButton.addEventListener('mousedown', Pseudocode.mousedownPseudocodeButtonHandler);
-window.addEventListener('mouseup', Pseudocode.mouseupPseudocodeButtonHandler);
+PseudocodeElements.pseudocodeButton.addEventListener('mousedown', PseudocodeElements.mousedownPseudocodeButtonHandler);
+window.addEventListener('mouseup', PseudocodeElements.mouseupPseudocodeButtonHandler);
 
 Speed.speedPointer.addEventListener('mousedown', Speed.mousedownSpeedPointerHandler);
 window.addEventListener('mouseup', Speed.mouseupSpeedPointerHandler);
@@ -38,12 +39,16 @@ window.addEventListener('mouseup', Timeline.mouseupTimelinePointerHandler);
 
 // tree initializing
 
+const pseudocode = new Pseudocode(PseudocodeElements.pseudocodeWindow);
+pseudocode.renderInsert();
 const treeCanvas = new TreeCanvas(Snap("#canvas"));
-const tree = new Tree(null, treeCanvas);
+const tree = new Tree(null, treeCanvas, pseudocode);
 
 const insertButton = document.querySelector(".basic-operations__operation-title_leaf");
 const findButton = document.querySelector(".basic-operations__operation-title_apple");
 const removeButton = document.querySelector(".basic-operations__operation-title_cross");
+const clearButton = document.querySelector(".clear-button");
+const middlePart = document.querySelector('.middle-part');
 const canvas = document.getElementById("canvas");
 
 function insertButtonHandler(event) {
@@ -71,24 +76,34 @@ function nodeHandler(event) {
     if (event.target.closest(".node")) {
         tree.remove(Number.parseInt(event.target.closest(".node").getAttribute('id')));
         treeCanvas.renderTree(tree.root);
-        canvas.removeEventListener('click', nodeHandler)
+        canvas.removeEventListener('click', nodeHandler);
+        middlePart.classList.remove('middle-part_delete-mode');
+        removeButton.classList.remove('basic-operations__operation-title_delete-mode');
     }
 }
 function removeButtonHandler(event) {
+    middlePart.classList.add('middle-part_delete-mode');
+    removeButton.classList.add('basic-operations__operation-title_delete-mode');
     canvas.addEventListener('click', nodeHandler);
 }
+function clearCanvasHandler(event) {
+    treeCanvas.clearCanvas();
+    tree.root = null;
+}
+
 insertButton.addEventListener('click', insertButtonHandler);
 findButton.addEventListener('click', findButtonHandler);
 removeButton.addEventListener('click', removeButtonHandler);
+clearButton.addEventListener('click', clearCanvasHandler);
 
 tree.insert(new TreeNode(50));
-tree.insert(new TreeNode(25));
-tree.insert(new TreeNode(100));
-tree.insert(new TreeNode(75));
-tree.insert(new TreeNode(125));
-tree.insert(new TreeNode(55));
-tree.insert(new TreeNode(85));
-tree.insert(new TreeNode(53));
-tree.insert(new TreeNode(60));
-tree.insert(new TreeNode(52));
-tree.insert(new TreeNode(54));
+// tree.insert(new TreeNode(25));
+// tree.insert(new TreeNode(100));
+// tree.insert(new TreeNode(75));
+// tree.insert(new TreeNode(125));
+// tree.insert(new TreeNode(55));
+// tree.insert(new TreeNode(85));
+// tree.insert(new TreeNode(53));
+// tree.insert(new TreeNode(60));
+// tree.insert(new TreeNode(52));
+// tree.insert(new TreeNode(54));

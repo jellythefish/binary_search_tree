@@ -63,4 +63,17 @@
     font-weight: normal;
     src: url('./fonts/marckscript.woff2') format('woff2')
 }
-  
+
+/* @font-face {
+    font-family: 'Tinos';
+    font-style: italic;
+    font-weight: normal;
+    src: url('./fonts/tinos-v13-latin_cyrillic-italic.woff') format('woff')
+}
+
+@font-face {
+    font-family: 'Tinos';
+    font-style: italic;
+    font-weight: bold;
+    src: url('./fonts/tinos-v13-latin_cyrillic-700italic.woff') format('woff')
+} */

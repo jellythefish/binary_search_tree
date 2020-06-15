@@ -43,6 +43,8 @@ window.addEventListener('mouseup', Speed.mouseupSpeedPointerHandler);
 const treeCanvas = new TreeCanvas(Snap("#canvas"));
 const timeController = new TimeController(); // таймконтроллер привязан к псевдокоду так что это логично
 const pseudocode = new Pseudocode(PseudocodeElements.pseudocodeWindow, treeCanvas, timeController);
+timeController.linkPseudocode(pseudocode);
+timeController.linkTreeCanvas(treeCanvas);
 pseudocode.initializeInsert();
 const tree = new Tree(null, treeCanvas, pseudocode);
 
@@ -56,7 +58,8 @@ const canvas = document.getElementById("canvas");
 function insertButtonHandler(event) {
     const insertValue = Number.parseInt(document.querySelector(".basic-operations__input_leaf").value); // to validate input later
     try {
-       tree.insert(new TreeNode(insertValue));
+        pseudocode.steps = [];
+        tree.insert(new TreeNode(insertValue));
     } catch (e) {
         alert(e.message);
     }

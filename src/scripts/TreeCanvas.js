@@ -17,6 +17,9 @@ export default class TreeCanvas {
         this._nodeKeyPositionYSun = '52%';
         this._edgeDegreeAlignmenet = 90;
         this._edgeVerticalAlignment = 25;
+        this.steps = [];
+        this._latestInsertedEdge = null;
+        this._latestInsertedNode = null;
     }
 
     clearCanvas() {
@@ -36,6 +39,26 @@ export default class TreeCanvas {
         }
         if (currentNode.leftChild) this.renderTree(currentNode.leftChild);
         if (currentNode.rightChild) this.renderTree(currentNode.rightChild);
+    }
+
+    renderTreeState(stateIndex) {
+        this.removeLatestInsertOperation();
+        this.steps.forEach((step) => this.unhighlightNode(step.currentNode));
+        let nodeToHighlight, nodeToRender;
+        for (let i = 0; i <= stateIndex; ++i) {
+            const step = this.steps[i];
+            nodeToHighlight = step.currentNode;
+            nodeToRender = step.nodeToInsert;
+            if (nodeToRender) return this.renderElement(nodeToRender.node, nodeToRender.childSide);
+        }
+        if (nodeToHighlight) this.highlightNode(nodeToHighlight);
+    }
+
+    removeLatestInsertOperation() {
+        if (this._latestInsertedEdge) this._latestInsertedEdge.remove();
+        if (this._latestInsertedNode) this._latestInsertedNode.remove();
+        this._latestInsertedEdge = null;
+        this._latestInsertedNode = null;
     }
 
     renderElement(parentNode, childSide) {
@@ -83,6 +106,7 @@ export default class TreeCanvas {
         node.append(img);
         node.append(text);
 
+        this._latestInsertedNode = node.node;
         const element = document.getElementById(key);
         return element;
     }
@@ -102,6 +126,7 @@ export default class TreeCanvas {
         edge.attr({ id: `e${key}`, class: "edge" });
         edge.transform(`r${newAngle}`);
 
+        this._latestInsertedEdge = edge.node;
         this._animateEdgeInsert(edge.node, edgeWidth, length);
     }
 
@@ -163,6 +188,7 @@ export default class TreeCanvas {
     unhighlightNode(node) {
         if (!node) return; 
         const svgElement = document.getElementById(`${node.key}`);
-        svgElement.getElementsByTagName('circle')[0].remove();
+        const shade = svgElement.getElementsByTagName('circle')[0];
+        if (shade) shade.remove()
     }
 }

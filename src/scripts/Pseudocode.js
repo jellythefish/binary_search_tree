@@ -7,28 +7,33 @@ export default class Pseudocode {
         this.indentSize = 25;
         this.stepSpeed = null; // in seconds
         this.steps = [];
+        this._index = 0;
+        this.paused = false;
     }
 
-    async renderOperation() {
-        this._timeController.initializeTimeline(this.steps.length);
+    async renderOperation(index) {
+        this._index = index;
+        this._treeCanvas.steps = this.steps;
+        this.steps.forEach((step) => this._treeCanvas.unhighlightNode(step.currentNode));
+        if (index === 0) this._timeController.initializeTimeline(this.steps.length);
         this.stepSpeed = this._timeController.getCurrentStepSpeed();
-        for (let elem of this.steps) {
-            await this.makeStep(elem.index, elem.lastStep, elem.currentNode, elem.nodeToInsert);
+        for (let i = index; i < this.steps.length; ++i) {
+            if (this.paused) return;
+            const elem = this.steps[i];
+            await this.makeStep(elem.lastStep, elem.currentNode, elem.nodeToInsert);
         }
-        this.steps = [];
     }
 
-    makeStep(index, lastStep, nodeToHighlight, nodeToRender) {
-        this.clearLineHighlights();
+    makeStep(lastStep, nodeToHighlight, nodeToRender) {
         if (nodeToHighlight) this._treeCanvas.highlightNode(nodeToHighlight);
-        this._timeController.makeStep();
-        this.highlightLine(this._lines[index]);
+        this._timeController.stepForward();
+        this.highlightLine(this._index++);
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                console.log(index);
                 if (nodeToHighlight) this._treeCanvas.unhighlightNode(nodeToHighlight);
                 if (nodeToRender) this._treeCanvas.renderElement(nodeToRender.node, nodeToRender.childSide);
                 resolve();
+                if (lastStep) this._timeController.renderPlayPause('play');
             }, this.stepSpeed * 1000 * (!lastStep));
         });
     }
@@ -69,7 +74,10 @@ export default class Pseudocode {
 
     }
 
-    highlightLine(line) {
+    highlightLine(stepIndex) {
+        this.clearLineHighlights()
+        const lineNumber = this.steps[stepIndex].index;
+        const line = this._lines[lineNumber];
         line.line.style.background = line.props.highlightColor;
         line.line.children[0].style['font-weight'] = '800';
     }
@@ -80,10 +88,4 @@ export default class Pseudocode {
             elem.line.children[0].style['font-weight'] = 'normal';
         })
     }
-
-
-    // unhighlightLine(line) {
-    //     line.line.style.background = '';
-    //     line.line.children[0].style['font-weight'] = 'normal';
-    // }
 }

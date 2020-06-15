@@ -165,7 +165,7 @@
                         <svg id="canvas" width="1440px" height="660px"></svg>
                     </div>
 
-                    <div class="basic-operations">
+                    <div class="basic-operations" style="left: 0px">
                         <h3 class="basic-operations__title">Основные операции</h3>
                         <p class="basic-operations__avl-status">(AVL)</h4>
                         <div class="basic-operations__operation">
@@ -216,11 +216,12 @@
                             </div>
                             <p class="time-control__text">Быстрее</p>
                             <div class="time-control__buttons">
-                                <img class="time-control__button" src="<%= require('./images/to-beginning.svg').default %>">
-                                <img class="time-control__button" src="<%= require('./images/previous-step.svg').default %>">
-                                <img class="time-control__button" src="<%= require('./images/play.svg').default %>">
-                                <img class="time-control__button" src="<%= require('./images/next-step.svg').default %>">
-                                <img class="time-control__button" src="<%= require('./images/to-end.svg').default %>">
+                                <img class="time-control__button js-time-control-to-start" src="<%= require('./images/to-start.svg').default %>">
+                                <img class="time-control__button js-time-control-prev-step" src="<%= require('./images/previous-step.svg').default %>">
+                                <img class="time-control__button js-time-control-play" src="<%= require('./images/play.svg').default %>">
+                                <img class="time-control__button time-control__button_hidden js-time-control-pause" src="<%= require('./images/pause.svg').default %>">
+                                <img class="time-control__button js-time-control-next-step" src="<%= require('./images/next-step.svg').default %>">
+                                <img class="time-control__button js-time-control-to-end" src="<%= require('./images/to-end.svg').default %>">
                             </div>
                         </div>
                         <div class="time-control__timeline">

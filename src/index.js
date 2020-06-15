@@ -14,6 +14,7 @@ import Tree from './scripts/Tree';
 import TreeNode from './scripts/TreeNode';
 import TreeCanvas from "./scripts/TreeCanvas";
 import Pseudocode from './scripts/Pseudocode';
+import TimeController from './scripts/TimeController';
 
 Menu.menuButton.addEventListener('click', Menu.menuButtonHandler);
 Menu.createTreeButton.addEventListener('click', Menu.menuCreateTreeButtonHandler);
@@ -33,14 +34,15 @@ window.addEventListener('mouseup', PseudocodeElements.mouseupPseudocodeButtonHan
 Speed.speedPointer.addEventListener('mousedown', Speed.mousedownSpeedPointerHandler);
 window.addEventListener('mouseup', Speed.mouseupSpeedPointerHandler);
 
-Timeline.timelinePointer.addEventListener('mousedown', Timeline.mousedownTimelinePointerHandler);
-window.addEventListener('mouseup', Timeline.mouseupTimelinePointerHandler);
+// Timeline.timelinePointer.addEventListener('mousedown', Timeline.mousedownTimelinePointerHandler);
+// window.addEventListener('mouseup', Timeline.mouseupTimelinePointerHandler);
 
 
 // tree initializing
 
 const treeCanvas = new TreeCanvas(Snap("#canvas"));
-const pseudocode = new Pseudocode(PseudocodeElements.pseudocodeWindow, treeCanvas);
+const timeController = new TimeController(); // таймконтроллер привязан к псевдокоду так что это логично
+const pseudocode = new Pseudocode(PseudocodeElements.pseudocodeWindow, treeCanvas, timeController);
 pseudocode.initializeInsert();
 const tree = new Tree(null, treeCanvas, pseudocode);
 
@@ -96,7 +98,7 @@ findButton.addEventListener('click', findButtonHandler);
 removeButton.addEventListener('click', removeButtonHandler);
 clearButton.addEventListener('click', clearCanvasHandler);
 
-tree.insert(new TreeNode(50));
+// tree.insert(new TreeNode(50));
 // tree.insert(new TreeNode(25));
 // tree.insert(new TreeNode(100));
 // tree.insert(new TreeNode(75));

@@ -1,24 +1,17 @@
-import { currentTheoryWindowRightX } from "../blocks/content/middle-part/theory/theory";
-
 export default class Pseudocode {
-    constructor(container, treeCanvas) {
+    constructor(container, treeCanvas, timeController) {
         this.container = container;
         this._treeCanvas = treeCanvas;
+        this._timeController = timeController;
         this._lines = [];
         this.indentSize = 25;
-        this.maxStepSpeed = 5;
-        this.minStepSpeed = 0.1;
-        this.stepSpeed = 2; // in seconds
-        this.speedPointer;
+        this.stepSpeed = null; // in seconds
         this.steps = [];
     }
 
     async renderOperation() {
-        const speedPointer = document.querySelector('.time-control__speed-pointer');
-        const speedPointerPosition = Number.parseInt((window.getComputedStyle(speedPointer, 'style').left));
-        console.log("speedPosition", speedPointerPosition);
-        this.stepSpeed = (1 - speedPointerPosition / 100) * this.maxStepSpeed;
-        console.log(this.stepSpeed);
+        this._timeController.initializeTimeline(this.steps.length);
+        this.stepSpeed = this._timeController.getCurrentStepSpeed();
         for (let elem of this.steps) {
             await this.makeStep(elem.index, elem.lastStep, elem.currentNode, elem.nodeToInsert);
         }
@@ -28,6 +21,7 @@ export default class Pseudocode {
     makeStep(index, lastStep, nodeToHighlight, nodeToRender) {
         this.clearLineHighlights();
         if (nodeToHighlight) this._treeCanvas.highlightNode(nodeToHighlight);
+        this._timeController.makeStep();
         this.highlightLine(this._lines[index]);
         return new Promise((resolve, reject) => {
             setTimeout(() => {

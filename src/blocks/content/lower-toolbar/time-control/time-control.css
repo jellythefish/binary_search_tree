@@ -10,6 +10,7 @@
 @import url(./__timeline-pointer/time-control__timeline-pointer.css);
 @import url(./__timeline/time-control__timeline.css);
 @import url(./__text/time-control__text.css);
+@import url(./__button/_hidden/time-control__button_hidden.css);
 
 .time-control {
     margin-left: 240px;

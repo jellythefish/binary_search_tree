@@ -1,0 +1,10 @@
+.time-control__text {
+    margin: 0 8px 0 0;
+    text-align: center;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 40px;
+    color: #FFFFFF;
+}

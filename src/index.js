@@ -39,9 +39,9 @@ window.addEventListener('mouseup', Timeline.mouseupTimelinePointerHandler);
 
 // tree initializing
 
-const pseudocode = new Pseudocode(PseudocodeElements.pseudocodeWindow);
-pseudocode.renderInsert();
 const treeCanvas = new TreeCanvas(Snap("#canvas"));
+const pseudocode = new Pseudocode(PseudocodeElements.pseudocodeWindow, treeCanvas);
+pseudocode.initializeInsert();
 const tree = new Tree(null, treeCanvas, pseudocode);
 
 const insertButton = document.querySelector(".basic-operations__operation-title_leaf");

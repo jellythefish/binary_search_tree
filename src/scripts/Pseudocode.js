@@ -1,20 +1,45 @@
+import { currentTheoryWindowRightX } from "../blocks/content/middle-part/theory/theory";
+
 export default class Pseudocode {
-    constructor(container) {
+    constructor(container, treeCanvas) {
         this.container = container;
+        this._treeCanvas = treeCanvas;
         this._lines = [];
         this.indentSize = 25;
-        this.stepSpeed = 1; // in seconds
+        this.maxStepSpeed = 5;
+        this.minStepSpeed = 0.1;
+        this.stepSpeed = 2; // in seconds
+        this.speedPointer;
+        this.steps = [];
     }
 
-    step(index, lastStep) {
-        this.clearHighlights();
+    async renderOperation() {
+        const speedPointer = document.querySelector('.time-control__speed-pointer');
+        const speedPointerPosition = Number.parseInt((window.getComputedStyle(speedPointer, 'style').left));
+        console.log("speedPosition", speedPointerPosition);
+        this.stepSpeed = (1 - speedPointerPosition / 100) * this.maxStepSpeed;
+        console.log(this.stepSpeed);
+        for (let elem of this.steps) {
+            await this.makeStep(elem.index, elem.lastStep, elem.currentNode, elem.nodeToInsert);
+        }
+        this.steps = [];
+    }
+
+    makeStep(index, lastStep, nodeToHighlight, nodeToRender) {
+        this.clearLineHighlights();
+        if (nodeToHighlight) this._treeCanvas.highlightNode(nodeToHighlight);
         this.highlightLine(this._lines[index]);
         return new Promise((resolve, reject) => {
-            setTimeout(() => resolve(), this.stepSpeed * 1000 * (!lastStep));
+            setTimeout(() => {
+                console.log(index);
+                if (nodeToHighlight) this._treeCanvas.unhighlightNode(nodeToHighlight);
+                if (nodeToRender) this._treeCanvas.renderElement(nodeToRender.node, nodeToRender.childSide);
+                resolve();
+            }, this.stepSpeed * 1000 * (!lastStep));
         });
     }
     
-    renderInsert() {
+    initializeInsert() {
         const lines = [
             { text: 'Дерево пусто?', indentLevel: 0, highlightColor: '#cf8859' }, 
             { text: 'Да: вставляем корень.', indentLevel: 1, highlightColor: '#e7d0ad' }, 
@@ -42,11 +67,11 @@ export default class Pseudocode {
         })
     }
 
-    renderFind() {
+    initializeFind() {
 
     }
 
-    renderRemove() {
+    initializeRemove() {
 
     }
 
@@ -55,7 +80,7 @@ export default class Pseudocode {
         line.line.children[0].style['font-weight'] = '800';
     }
 
-    clearHighlights() {
+    clearLineHighlights() {
         this._lines.forEach((elem) => {
             elem.line.style.background = '';
             elem.line.children[0].style['font-weight'] = 'normal';

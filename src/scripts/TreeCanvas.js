@@ -102,35 +102,38 @@ export default class TreeCanvas {
         edge.attr({ id: `e${key}`, class: "edge" });
         edge.transform(`r${newAngle}`);
 
-        let elem = edge.node; 
-        elem.setAttribute('width', 0);
-        elem.setAttribute('height', 0);
+        this._animateEdgeInsert(edge.node, edgeWidth, length);
+    }
+
+    _animateEdgeInsert(edge, edgeWidth, length) {
+        edge.setAttribute('width', 0);
+        edge.setAttribute('height', 0);
         let width = 0;
         let height = 0; 
     
         let widthInterval = setInterval(widthFrame, 10);
         function widthFrame() {
-            const nowWidth = Number.parseInt(elem.getAttribute('width'));
+            const nowWidth = Number.parseInt(edge.getAttribute('width'));
             if (nowWidth === edgeWidth) {
                 clearInterval(widthInterval);
             } else {
                 width++; 
-                elem.setAttribute('width', width); 
+                edge.setAttribute('width', width); 
             }
         }
         let heightInterval = setInterval(heightFrame, 10);
         function heightFrame() {
-            const nowHeight = Number.parseInt(elem.getAttribute('height'));
+            const nowHeight = Number.parseInt(edge.getAttribute('height'));
             if (nowHeight === length) {
                 clearInterval(heightInterval);
             } else {
                 height++; 
-                elem.setAttribute('height', height); 
+                edge.setAttribute('height', height); 
             }
         }
     }
 
-    highlightCurrentNode(node) {
+    highlightNode(node) {
         if (!node) return; 
         const svgElement = document.getElementById(`${node.key}`);
         const snapObject = Snap(svgElement);
@@ -157,12 +160,9 @@ export default class TreeCanvas {
         highlightCircle.prependTo(snapObject);
     }
 
-    unhighlightCurrentNode(node) {
+    unhighlightNode(node) {
         if (!node) return; 
         const svgElement = document.getElementById(`${node.key}`);
-        console.log(svgElement);
-        const snapObject = Snap(svgElement);
         svgElement.getElementsByTagName('circle')[0].remove();
-        // console.log(circle);
     }
 }

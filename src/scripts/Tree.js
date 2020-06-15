@@ -6,55 +6,48 @@ export default class Tree {
     }
 
     async insert(node, currentNode = this.root) {
-        this._treeCanvas.highlightCurrentNode(currentNode);
         if (!node) {
-            this._treeCanvas.unhighlightCurrentNode(currentNode);
             throw new Error("Не указана вершина для вставки");
         }
-        await this._pseudocode.step(0, 0);;
+        this._pseudocode.steps.push({ index: 0, lastStep: 0, currentNode });
         if (!this.root) {
             this.root = node;
             this.root.type = "root";
-            this._treeCanvas.renderElement(this.root);
-            await this._pseudocode.step(1, 0);
-            await this._pseudocode.step(10, 1);
-            this._treeCanvas.unhighlightCurrentNode(currentNode);
+            this._pseudocode.steps.push({ index: 1, lastStep: 0, currentNode });
+            this._pseudocode.steps.push({ index: 10, lastStep: 1, currentNode, nodeToInsert: { node: this.root } });
+            this._pseudocode.renderOperation();
             return;
         }
-        await this._pseudocode.step(2, 0);
+        this._pseudocode.steps.push({ index: 2, lastStep: 0, currentNode });
         if (node.key < currentNode.key) {
-            await this._pseudocode.step(3, 0);
+            this._pseudocode.steps.push({ index: 3, lastStep: 0, currentNode });
             if (!currentNode.leftChild) {
                 currentNode.leftChild = node;
                 currentNode.leftChild.type = "node";
                 currentNode.leftChild.parent = currentNode;
-                this._treeCanvas.renderElement(currentNode, "left");
-                await this._pseudocode.step(4, 0);
-                await this._pseudocode.step(10, 1);
-                this._treeCanvas.unhighlightCurrentNode(currentNode);
+                this._pseudocode.steps.push({ index: 4, lastStep: 0, currentNode });
+                this._pseudocode.steps.push({ index: 10, lastStep: 1, currentNode, nodeToInsert: { node: currentNode, childSide: "left" } });
+                this._pseudocode.renderOperation();
             } else {
-                await this._pseudocode.step(5, 0);
-                this._treeCanvas.unhighlightCurrentNode(currentNode);
+                this._pseudocode.steps.push({ index: 5, lastStep: 0, currentNode });
                 this.insert(node, currentNode.leftChild);
             }
         } else if (node.key === currentNode.key) {
-            await this._pseudocode.step(6, 1);
-            await this._pseudocode.step(10, 1);
-            this._treeCanvas.unhighlightCurrentNode(currentNode);
+            this._pseudocode.steps.push({ index: 6, lastStep: 1, currentNode });
+            this._pseudocode.steps.push({ index: 10, lastStep: 1, currentNode });
+            this._pseudocode.renderOperation();
             throw new Error("Данный элемент уже присутствует в дереве");
         } else {
-            await this._pseudocode.step(7, 0);
+            this._pseudocode.steps.push({ index: 7, lastStep: 0, currentNode });
             if (!currentNode.rightChild) {
                 currentNode.rightChild = node;
                 currentNode.rightChild.type = "node";
                 currentNode.rightChild.parent = currentNode;
-                this._treeCanvas.renderElement(currentNode, "right");
-                await this._pseudocode.step(8, 0);
-                await this._pseudocode.step(10, 1);
-                this._treeCanvas.unhighlightCurrentNode(currentNode);
+                this._pseudocode.steps.push({ index: 8, lastStep: 0, currentNode });
+                this._pseudocode.steps.push({ index: 10, lastStep: 1, currentNode, nodeToInsert: { node: currentNode, childSide: "right" } });
+                this._pseudocode.renderOperation();
             } else {
-                await this._pseudocode.step(9, 0);
-                this._treeCanvas.unhighlightCurrentNode(currentNode);
+                this._pseudocode.steps.push({ index: 9, lastStep: 0, currentNode });
                 this.insert(node, currentNode.rightChild);
             }
         }

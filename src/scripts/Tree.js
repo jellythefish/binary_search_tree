@@ -36,7 +36,7 @@ export default class Tree {
             this._pseudocode.steps.push({ index: 6, lastStep: 0, currentNode });
             this._pseudocode.steps.push({ index: 10, lastStep: 1, currentNode });
             this._pseudocode.renderOperation(0);
-            alert("Данный элемент уже присутствует в дереве");
+            throw new Error("Данный элемент уже присутствует в дереве");
         } else {
             this._pseudocode.steps.push({ index: 7, lastStep: 0, currentNode });
             if (!currentNode.rightChild) {

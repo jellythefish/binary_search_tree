@@ -9,7 +9,6 @@ import * as BasicOperations from './blocks/content/middle-part/basic-operations/
 import * as Theory from './blocks/content/middle-part/theory/theory.js';
 import * as PseudocodeElements from './blocks/content/middle-part/pseudocode/pseudocode.js';
 import * as Speed from './blocks/content/lower-toolbar/time-control/__speed/time-control__speed.js';
-import * as Timeline from './blocks/content/lower-toolbar/time-control/__timeline/time-control__timeline.js';
 import Tree from './scripts/Tree';
 import TreeNode from './scripts/TreeNode';
 import TreeCanvas from "./scripts/TreeCanvas";
@@ -34,18 +33,14 @@ window.addEventListener('mouseup', PseudocodeElements.mouseupPseudocodeButtonHan
 Speed.speedPointer.addEventListener('mousedown', Speed.mousedownSpeedPointerHandler);
 window.addEventListener('mouseup', Speed.mouseupSpeedPointerHandler);
 
-// Timeline.timelinePointer.addEventListener('mousedown', Timeline.mousedownTimelinePointerHandler);
-// window.addEventListener('mouseup', Timeline.mouseupTimelinePointerHandler);
-
-
 // tree initializing
 
 const treeCanvas = new TreeCanvas(Snap("#canvas"));
 const timeController = new TimeController(); // таймконтроллер привязан к псевдокоду так что это логично
 const pseudocode = new Pseudocode(PseudocodeElements.pseudocodeWindow, treeCanvas, timeController);
+const tree = new Tree(null, treeCanvas, pseudocode);
 timeController.linkPseudocode(pseudocode);
 timeController.linkTreeCanvas(treeCanvas);
-const tree = new Tree(null, treeCanvas, pseudocode);
 
 const insertButton = document.querySelector(".basic-operations__operation-title_leaf");
 const findButton = document.querySelector(".basic-operations__operation-title_apple");
@@ -82,7 +77,11 @@ function nodeHandler(event) {
     if (event.target.closest(".node")) {
         tree.remove(Number.parseInt(event.target.closest(".node").getAttribute('id')));
         treeCanvas.renderTree(tree.root);
-        canvas.removeEventListener('click', nodeHandler);
+        window.removeEventListener('click', nodeHandler);
+        middlePart.classList.remove('middle-part_delete-mode');
+        removeButton.classList.remove('basic-operations__operation-title_delete-mode');
+    } else if (!event.target.classList.contains('basic-operations__operation-title_cross')) {
+        window.removeEventListener('click', nodeHandler);
         middlePart.classList.remove('middle-part_delete-mode');
         removeButton.classList.remove('basic-operations__operation-title_delete-mode');
     }
@@ -90,7 +89,7 @@ function nodeHandler(event) {
 function removeButtonHandler(event) {
     middlePart.classList.add('middle-part_delete-mode');
     removeButton.classList.add('basic-operations__operation-title_delete-mode');
-    canvas.addEventListener('click', nodeHandler);
+    window.addEventListener('click', nodeHandler);
 }
 function clearCanvasHandler(event) {
     treeCanvas.clearCanvas();

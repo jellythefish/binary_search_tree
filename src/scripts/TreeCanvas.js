@@ -19,8 +19,8 @@ export default class TreeCanvas {
         this._edgeVerticalAlignment = 25;
         this.steps = [];
         this.currentOperation = null;
-        this._latestInsertedEdge = null;
-        this._latestInsertedNode = null;
+        this.latestInsertedEdge = null;
+        this.latestInsertedNode = null;
     }
 
     clearCanvas() {
@@ -43,7 +43,6 @@ export default class TreeCanvas {
     }
 
     renderTreeState(stateIndex) {
-        // if (this.currentOperation === 'insert') this.removeLatestInsertOperation();
         this.removeLatestInsertOperation();
         this.steps.forEach((step) => this.unhighlightNode(step.currentNode));
         let nodeToHighlight, nodeToRender;
@@ -57,10 +56,10 @@ export default class TreeCanvas {
     }
 
     removeLatestInsertOperation() {
-        if (this._latestInsertedEdge) this._latestInsertedEdge.remove();
-        if (this._latestInsertedNode) this._latestInsertedNode.remove();
-        this._latestInsertedEdge = null;
-        this._latestInsertedNode = null;
+        if (this.latestInsertedEdge) this.latestInsertedEdge.remove();
+        if (this.latestInsertedNode) this.latestInsertedNode.remove();
+        this.latestInsertedEdge = null;
+        this.latestInsertedNode = null;
     }
 
     renderElement(parentNode, childSide) {
@@ -108,7 +107,7 @@ export default class TreeCanvas {
         node.append(img);
         node.append(text);
 
-        this._latestInsertedNode = node.node;
+        this.latestInsertedNode = node.node;
         const element = document.getElementById(key);
         return element;
     }
@@ -128,7 +127,7 @@ export default class TreeCanvas {
         edge.attr({ id: `e${key}`, class: "edge" });
         edge.transform(`r${newAngle}`);
 
-        this._latestInsertedEdge = edge.node;
+        this.latestInsertedEdge = edge.node;
         this._animateEdgeInsert(edge.node, edgeWidth, length);
     }
 

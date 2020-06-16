@@ -33,10 +33,10 @@ export default class Tree {
                 this.insert(node, currentNode.leftChild);
             }
         } else if (node.key === currentNode.key) {
-            this._pseudocode.steps.push({ index: 6, lastStep: 1, currentNode });
+            this._pseudocode.steps.push({ index: 6, lastStep: 0, currentNode });
             this._pseudocode.steps.push({ index: 10, lastStep: 1, currentNode });
             this._pseudocode.renderOperation(0);
-            throw new Error("Данный элемент уже присутствует в дереве");
+            alert("Данный элемент уже присутствует в дереве");
         } else {
             this._pseudocode.steps.push({ index: 7, lastStep: 0, currentNode });
             if (!currentNode.rightChild) {
@@ -60,12 +60,30 @@ export default class Tree {
         if (!this.root) {
             throw new Error("В дереве нет ни одной вершины");
         }
+        this._pseudocode.steps.push({ index: 0, lastStep: 0, currentNode });
         if (key === currentNode.key) {
+            this._pseudocode.steps.push({ index: 1, lastStep: 0, currentNode });
+            this._pseudocode.steps.push({ index: 8, lastStep: 1, currentNode });
+            this._pseudocode.renderOperation(0);
             return currentNode;
-        } else if (key < currentNode.key && currentNode.leftChild) {
-            return this.find(key, currentNode.leftChild);
-        } else if (key > currentNode.key && currentNode.rightChild) {
-            return this.find(key, currentNode.rightChild);
+        } else if (key < currentNode.key) {
+            this._pseudocode.steps.push({ index: 2, lastStep: 0, currentNode });
+            if (currentNode.leftChild) {
+                this._pseudocode.steps.push({ index: 4, lastStep: 0, currentNode });
+                return this.find(key, currentNode.leftChild);
+            }
+            this._pseudocode.steps.push({ index: 3, lastStep: 0, currentNode });
+            this._pseudocode.steps.push({ index: 8, lastStep: 1, currentNode });
+            this._pseudocode.renderOperation(0);
+        } else if (key > currentNode.key) {
+            this._pseudocode.steps.push({ index: 5, lastStep: 0, currentNode });
+            if (currentNode.rightChild) {
+                this._pseudocode.steps.push({ index: 7, lastStep: 0, currentNode });
+                return this.find(key, currentNode.rightChild);
+            }
+            this._pseudocode.steps.push({ index: 6, lastStep: 0, currentNode });
+            this._pseudocode.steps.push({ index: 8, lastStep: 1, currentNode });
+            this._pseudocode.renderOperation(0);
         } else {
             return null;
         }

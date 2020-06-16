@@ -45,7 +45,6 @@ const timeController = new TimeController(); // таймконтроллер п�
 const pseudocode = new Pseudocode(PseudocodeElements.pseudocodeWindow, treeCanvas, timeController);
 timeController.linkPseudocode(pseudocode);
 timeController.linkTreeCanvas(treeCanvas);
-pseudocode.initializeInsert();
 const tree = new Tree(null, treeCanvas, pseudocode);
 
 const insertButton = document.querySelector(".basic-operations__operation-title_leaf");
@@ -56,9 +55,10 @@ const middlePart = document.querySelector('.middle-part');
 const canvas = document.getElementById("canvas");
 
 function insertButtonHandler(event) {
-    const insertValue = Number.parseInt(document.querySelector(".basic-operations__input_leaf").value); // to validate input later
+    const insertValue = Number.parseInt(document.querySelector(".basic-operations__input_leaf").value);
     try {
         pseudocode.steps = [];
+        pseudocode.initializeInsert();
         tree.insert(new TreeNode(insertValue));
     } catch (e) {
         alert(e.message);
@@ -67,6 +67,7 @@ function insertButtonHandler(event) {
 function findButtonHandler(event) {
     const findValue = Number.parseInt(document.querySelector(".basic-operations__input_apple").value); // to validate input later
     try {
+        pseudocode.initializeFind();
         const node = tree.find(findValue);
         if (node) {
             alert("Вершина найдена");

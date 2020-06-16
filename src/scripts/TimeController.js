@@ -15,7 +15,7 @@ export default class TimeController {
         this._timelineElement = document.querySelector('.time-control__timeline');
         this._timelineTotalWidth = getComputedStyle(this._timelineElement).getPropertyValue('width').slice(0, -2);
         this._maxStepSpeed = 5;
-        this._currentPointerPositionIndex = -1;
+        this._currentPointerPositionIndex = 0;
         this._timelineParts = [];
         this._partLength = null;
         this._timilineInitialized = false;
@@ -46,17 +46,19 @@ export default class TimeController {
         }
         this.renderPlayPause('pause');
         this._timelineParts = [];
-        this._currentPointerPositionIndex = -1;
+        this._currentPointerPositionIndex = 0;
         this._renderTimelineParts(stepsLength);
     }
 
     processControlButtton(event) {
         if (event.target.classList.contains('js-time-control-to-start')) {
             this.renderPlayPause('play');
+            this._pseudocode.paused = true;
             if (this._currentPointerPositionIndex === 0) return;
             this._currentPointerPositionIndex = 0;
         } else if (event.target.classList.contains('js-time-control-prev-step')) {
             this.renderPlayPause('play');
+            this._pseudocode.paused = true;
             if (this._currentPointerPositionIndex === 0) return;
             --this._currentPointerPositionIndex;
         } else if (event.target.classList.contains('js-time-control-play')) {
@@ -68,10 +70,12 @@ export default class TimeController {
             return this.renderPlayPause('play');
         } else if (event.target.classList.contains('js-time-control-next-step')) {
             this.renderPlayPause('play');
+            this._pseudocode.paused = true;
             if (this._currentPointerPositionIndex === this._timelineParts.length - 1) return;
             ++this._currentPointerPositionIndex;
         } else if (event.target.classList.contains('js-time-control-to-end')) {
             this.renderPlayPause('play');
+            this._pseudocode.paused = true;
             if (this._currentPointerPositionIndex === this._timelineParts.length - 1) return;
             this._currentPointerPositionIndex = this._timelineParts.length - 1;
         }
@@ -115,6 +119,8 @@ export default class TimeController {
     _mousemoveTimelinePointerHandler(event) {
         event.preventDefault();
         if (event.clientX - this._initialXTimelinePointer > this._partLength) {
+            this._pseudocode.paused = true;
+            this.renderPlayPause('play');
             if (this._currentTimelinePointerLeftX + this._partLength > this._timelineTotalWidth - 16) {
                 this._timelinePointer.style.left = this._timelineTotalWidth - 16 + 'px';
                 this._timelineCurrentElement.style.width = this._timelineTotalWidth + 'px';
@@ -122,9 +128,14 @@ export default class TimeController {
                 this._timelinePointer.style.left = this._currentTimelinePointerLeftX + this._partLength + 'px';
                 this._timelineCurrentElement.style.width = this._currentTimelinePointerLeftX + this._partLength + 8 + 'px';
             }
+            ++this._currentPointerPositionIndex;
+            this._pseudocode.highlightLine(this._currentPointerPositionIndex);
+            this._treeCanvas.renderTreeState(this._currentPointerPositionIndex);
             this._initialXTimelinePointer = event.clientX;
             this._currentTimelinePointerLeftX += this._partLength;
         } else if (this._initialXTimelinePointer - event.clientX > this._partLength) {
+            this._pseudocode.paused = true;
+            this.renderPlayPause('play');
             if (this._currentTimelinePointerLeftX - this._partLength < 0) {
                 this._timelinePointer.style.left = 0 + 'px';
                 this._timelineCurrentElement.style.width = 0 + 'px';
@@ -132,9 +143,12 @@ export default class TimeController {
                 this._timelinePointer.style.left = this._currentTimelinePointerLeftX - this._partLength + 'px';
                 this._timelineCurrentElement.style.width = this._currentTimelinePointerLeftX - this._partLength + 8 + 'px';
             }
+            --this._currentPointerPositionIndex;
+            this._pseudocode.highlightLine(this._currentPointerPositionIndex);
+            this._treeCanvas.renderTreeState(this._currentPointerPositionIndex);
             this._initialXTimelinePointer = event.clientX;
             this._currentTimelinePointerLeftX -= this._partLength;
-        }
+        }        
     }
 
     _mousedownTimelinePointerHandler(event) {

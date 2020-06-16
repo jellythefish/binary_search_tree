@@ -18,6 +18,7 @@ export default class TreeCanvas {
         this._edgeDegreeAlignmenet = 90;
         this._edgeVerticalAlignment = 25;
         this.steps = [];
+        this.currentOperation = null;
         this._latestInsertedEdge = null;
         this._latestInsertedNode = null;
     }
@@ -42,6 +43,7 @@ export default class TreeCanvas {
     }
 
     renderTreeState(stateIndex) {
+        // if (this.currentOperation === 'insert') this.removeLatestInsertOperation();
         this.removeLatestInsertOperation();
         this.steps.forEach((step) => this.unhighlightNode(step.currentNode));
         let nodeToHighlight, nodeToRender;

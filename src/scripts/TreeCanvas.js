@@ -189,7 +189,8 @@ export default class TreeCanvas {
     unhighlightNode(node) {
         if (!node) return; 
         const svgElement = document.getElementById(`${node.key}`);
-        const shade = svgElement.getElementsByTagName('circle')[0];
+        let shade;
+        if (svgElement) shade = svgElement.getElementsByTagName('circle')[0];
         if (shade) shade.remove()
     }
 }

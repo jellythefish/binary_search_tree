@@ -3,6 +3,8 @@ export default class Pseudocode {
         this.container = container;
         this._treeCanvas = treeCanvas;
         this._timeController = timeController;
+        this._pseudocodeOperationTitle = document.querySelector('.pseudocode__operation-title');
+        this._buttonClose = document.querySelector('.pseudocode__button');
         this._lines = [];
         this.indentSize = 25;
         this.stepSpeed = null; // in seconds
@@ -61,6 +63,10 @@ export default class Pseudocode {
             { text: 'Есть: текущей вершиной становится правый ребенок текущей вершины.', indentLevel: 3, highlightColor: '#fcd462' }, 
             { text: 'Конец вставки.', indentLevel: 0, highlightColor: '#cf8859' }, 
         ]
+        this._pseudocodeOperationTitle.textContent = 'Вставка вершины';
+        this.container.style.height = '400px';
+        this.container.style.top = '308px';
+        this._buttonClose.style.top = '73px';
         lineConstants.forEach((elem, index) => {
             const line = document.createElement('div'); 
             if (index === 0) line.style['border-top'] = '0.1px solid #c3a27b';
@@ -93,6 +99,10 @@ export default class Pseudocode {
             { text: 'Есть: текущей вершиной становится правый ребенок текущей вершины', indentLevel: 2, highlightColor: '#ECDABF' }, 
             { text: 'Поиск окончен.', indentLevel: 0, highlightColor: '#cf8859' }, 
         ]
+        this._pseudocodeOperationTitle.textContent = 'Поиск вершины'
+        this.container.style.height = '330px';   
+        this.container.style.top = '348px';
+        this._buttonClose.style.top = '73px';
         lineConstants.forEach((elem, index) => {
             const line = document.createElement('div'); 
             if (index === 0) line.style['border-top'] = '0.1px solid #c3a27b';
@@ -108,59 +118,6 @@ export default class Pseudocode {
         })
     }
 
-
-
-    // if (key === currentNode.key) {
-    //     if (!currentNode.leftChild && !currentNode.rightChild) {
-    //         if (currentNode === this.root) {
-    //             return this.root = null;
-    //         }
-    //         currentNode === currentNode.parent.rightChild ? // equal to deleting temporary NodeTree object
-    //         currentNode.parent.rightChild = null : currentNode.parent.leftChild = null
-    //     } else if (!currentNode.leftChild) {
-    //         if (currentNode === this.root) {
-    //             this.root = currentNode.rightChild;
-    //             this.root.type = 'root';
-    //             this.root.parent = null;
-    //             return;
-    //         }
-    //         currentNode === currentNode.parent.rightChild ? // rewriting parent child is equal to deleting old child
-    //         currentNode.parent.rightChild = currentNode.rightChild : currentNode.parent.leftChild = currentNode.rightChild;
-    //         currentNode.rightChild.parent = currentNode.parent;
-    //     } else if (!currentNode.rightChild) {
-    //         if (currentNode === this.root) {
-    //             this.root = currentNode.leftChild;
-    //             this.root.type = 'root';
-    //             this.root.parent = null;
-    //             return;
-    //         }
-    //         currentNode === currentNode.parent.leftChild ?
-    //         currentNode.parent.leftChild = currentNode.leftChild : currentNode.parent.rightChild = currentNode.leftChild;
-    //         currentNode.leftChild.parent = currentNode.parent;
-    //     } else { // both children exist
-    //         if (!currentNode.rightChild.leftChild) {
-    //             currentNode.key = currentNode.rightChild.key;
-    //             currentNode.rightChild = currentNode.rightChild.rightChild;
-    //             if (currentNode.rightChild) currentNode.rightChild.parent = currentNode; // to update right node parent
-    //         } else {
-    //             let tmpNode = currentNode.rightChild.leftChild;
-    //             while (tmpNode.leftChild) {
-    //                 tmpNode = tmpNode.leftChild;
-    //             }
-    //             let newValue = tmpNode.key;
-    //             this.remove(tmpNode.key);
-    //             currentNode.key = newValue;
-    //         }
-    //     }
-    // } else if (key < currentNode.key && currentNode.leftChild) {
-    //     this.remove(key, currentNode.leftChild);
-    // } else if (key > currentNode.key && currentNode.rightChild) {
-    //     this.remove(key, currentNode.rightChild);
-    // } else {
-    //     throw new Error("В дереве нет данной вершины");
-    // }
-
-
     initializeRemove() {
         const linesElements = this.container.querySelectorAll('.pseudocode__line-container');
         linesElements.forEach((line) => line.remove());
@@ -168,16 +125,29 @@ export default class Pseudocode {
         this._lines = [];
         this._treeCanvas.currentOperation = 'find';
         const lineConstants = [
-            { text: 'Ключ искомой вершины меньше, равен или больше ключа в текущей вершине?', indentLevel: 0, highlightColor: '#cf8859' }, 
-            { text: 'Если ==: данная вершина есть в дереве.', indentLevel: 1, highlightColor: '#e7d0ad' }, 
+            { text: 'Ключ удаляемой вершины меньше, равен или больше ключа в текущей вершине?', indentLevel: 0, highlightColor: '#cf8859' }, 
+            { text: 'Если ==: рассматриваем детей текущей вершины...', indentLevel: 1, highlightColor: '#e7d0ad' }, 
+            { text: 'Если нет ни одного ребенка: удаляем данную вершину', indentLevel: 2, highlightColor: '#e7d0ad' }, 
+            { text: 'Если нет только левого ребенка: правый ребенок текущей вершины занимает место текущей вершины, становясь новым ребенком отца текущей вершины.', indentLevel: 2, highlightColor: '#e7d0ad' }, 
+            { text: 'Есть нет только правого ребенка: левый ребенок текущей вершины занимает место текущей вершины, становясь новым ребенком отца текущей вершины.', indentLevel: 2, highlightColor: '#ECDABF' }, 
+            { text: 'Если есть оба ребенка: у правого ребенка удаляемой вершины есть левый ребенок (внук удаляемой вершины)?', indentLevel: 2, highlightColor: '#e7d0ad' },
+            { text: 'Нет: правый ребенок текущей вершины занимает место текущей вершины.', indentLevel: 3, highlightColor: '#e7d0ad' }, 
+            { text: 'Есть: тогда выполним следующие операции...', indentLevel: 3, highlightColor: '#e7d0ad' }, 
+            { text: 'Найдем самого левого ребенка правого ребенка удаляемой вершины.', indentLevel: 4, highlightColor: '#e7d0ad' }, 
+            { text: 'Ключ самого левого ребенка становится ключом удаляемой вершины.', indentLevel: 4, highlightColor: '#e7d0ad' }, 
+            { text: 'Текущей вершиной для удаления становится самый левый ребенок.', indentLevel: 4, highlightColor: '#e7d0ad' }, 
             { text: 'Если <: у текущей вершины есть левый ребенок?', indentLevel: 1, highlightColor: '#e7d0ad' }, 
-            { text: 'Нет: вершины нет в дереве.', indentLevel: 2, highlightColor: '#e7d0ad' }, 
-            { text: 'Есть: текущей вершиной становится левый ребенок текущей вершины', indentLevel: 2, highlightColor: '#ECDABF' }, 
+            { text: 'Нет: вершины для удаления нет в дереве.', indentLevel: 2, highlightColor: '#e7d0ad' }, 
+            { text: 'Есть: текущей вершиной становится левый ребенок текущей вершины.', indentLevel: 2, highlightColor: '#ECDABF' }, 
             { text: 'Если >: у текущей вершины есть правый ребенок?', indentLevel: 1, highlightColor: '#e7d0ad' }, 
-            { text: 'Нет: вершины нет в дереве.', indentLevel: 2, highlightColor: '#ECDABF' }, 
-            { text: 'Есть: текущей вершиной становится правый ребенок текущей вершины', indentLevel: 2, highlightColor: '#ECDABF' }, 
-            { text: 'Поиск окончен.', indentLevel: 0, highlightColor: '#cf8859' }, 
+            { text: 'Нет: вершины для удаления нет в дереве.', indentLevel: 2, highlightColor: '#e7d0ad' }, 
+            { text: 'Есть: текущей вершиной становится правый ребенок текущей вершины.', indentLevel: 2, highlightColor: '#ECDABF' },             
+            { text: 'Удаление окончено.', indentLevel: 0, highlightColor: '#cf8859' }, 
         ]
+        this._pseudocodeOperationTitle.textContent = 'Удаление вершины'
+        this.container.style.height = '730px';
+        this.container.style.top = '-20px'
+        this._buttonClose.style.top = '373px';
         lineConstants.forEach((elem, index) => {
             const line = document.createElement('div'); 
             if (index === 0) line.style['border-top'] = '0.1px solid #c3a27b';

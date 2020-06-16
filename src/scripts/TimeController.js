@@ -47,6 +47,8 @@ export default class TimeController {
         this.renderPlayPause('pause');
         this._timelineParts = [];
         this._currentPointerPositionIndex = 0;
+        this._timelinePointer.style.left = 0 + 'px';
+        this._timelineCurrentElement.style.width = 0 + 'px';
         this._renderTimelineParts(stepsLength);
     }
 

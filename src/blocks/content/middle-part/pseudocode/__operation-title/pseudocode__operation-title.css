@@ -1,0 +1,11 @@
+.pseudocode__operation-title {
+    width: 100%;
+    text-align: center;
+    margin: 0 0 15px 0;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 27px;
+    color: #000;
+}

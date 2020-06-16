@@ -96,52 +96,90 @@ export default class Tree {
         if (!this.root) {
             throw new Error("В дереве нет ни одной вершины");
         }
+        this._pseudocode.steps.push({ index: 0, lastStep: 0, currentNode });
         if (key === currentNode.key) {
-            if (!currentNode.leftChild && !currentNode.rightChild) {
+            this._pseudocode.steps.push({ index: 1, lastStep: 0, currentNode });
+            if (!currentNode.leftChild && !currentNode.rightChild) { // no children at all
+                this._pseudocode.steps.push({ index: 2, lastStep: 0, currentNode });
                 if (currentNode === this.root) {
-                    return this.root = null;
+                    this.root = null;
+                    this._pseudocode.steps.push({ index: 17, lastStep: 1, currentNode, nodeToRemove });
+                    return this._pseudocode.renderOperation(0);     
                 }
                 currentNode === currentNode.parent.rightChild ? // equal to deleting temporary NodeTree object
                 currentNode.parent.rightChild = null : currentNode.parent.leftChild = null
+                this._pseudocode.steps.push({ index: 17, lastStep: 1, currentNode });
+                this._pseudocode.renderOperation(0);
             } else if (!currentNode.leftChild) {
+                this._pseudocode.steps.push({ index: 3, lastStep: 0, currentNode });
                 if (currentNode === this.root) {
                     this.root = currentNode.rightChild;
                     this.root.type = 'root';
                     this.root.parent = null;
-                    return;
+                    this._pseudocode.steps.push({ index: 17, lastStep: 1, currentNode });
+                    return this._pseudocode.renderOperation(0);
                 }
                 currentNode === currentNode.parent.rightChild ? // rewriting parent child is equal to deleting old child
                 currentNode.parent.rightChild = currentNode.rightChild : currentNode.parent.leftChild = currentNode.rightChild;
                 currentNode.rightChild.parent = currentNode.parent;
+                this._pseudocode.steps.push({ index: 17, lastStep: 1, currentNode });
+                this._pseudocode.renderOperation(0);
             } else if (!currentNode.rightChild) {
+                this._pseudocode.steps.push({ index: 4, lastStep: 0, currentNode });
                 if (currentNode === this.root) {
                     this.root = currentNode.leftChild;
                     this.root.type = 'root';
                     this.root.parent = null;
-                    return;
+                    this._pseudocode.steps.push({ index: 17, lastStep: 1, currentNode });
+                    return this._pseudocode.renderOperation(0);
                 }
                 currentNode === currentNode.parent.leftChild ?
                 currentNode.parent.leftChild = currentNode.leftChild : currentNode.parent.rightChild = currentNode.leftChild;
                 currentNode.leftChild.parent = currentNode.parent;
+                this._pseudocode.steps.push({ index: 17, lastStep: 1, currentNode });
+                this._pseudocode.renderOperation(0);
             } else { // both children exist
+                this._pseudocode.steps.push({ index: 5, lastStep: 0, currentNode });
                 if (!currentNode.rightChild.leftChild) {
+                    this._pseudocode.steps.push({ index: 6, lastStep: 0, currentNode });
                     currentNode.key = currentNode.rightChild.key;
                     currentNode.rightChild = currentNode.rightChild.rightChild;
                     if (currentNode.rightChild) currentNode.rightChild.parent = currentNode; // to update right node parent
+                    this._pseudocode.steps.push({ index: 17, lastStep: 1, currentNode });
+                    this._pseudocode.renderOperation(0);
                 } else {
+                    this._pseudocode.steps.push({ index: 7, lastStep: 0, currentNode });
                     let tmpNode = currentNode.rightChild.leftChild;
+                    this._pseudocode.steps.push({ index: 8, lastStep: 0, tmpNode });
                     while (tmpNode.leftChild) {
                         tmpNode = tmpNode.leftChild;
+                        this._pseudocode.steps.push({ index: 8, lastStep: 0, tmpNode });
                     }
                     let newValue = tmpNode.key;
+                    this._pseudocode.steps.push({ index: 9, lastStep: 0, tmpNode });
+                    this._pseudocode.steps.push({ index: 10, lastStep: 0, tmpNode });
                     this.remove(tmpNode.key);
                     currentNode.key = newValue;
                 }
             }
-        } else if (key < currentNode.key && currentNode.leftChild) {
-            this.remove(key, currentNode.leftChild);
-        } else if (key > currentNode.key && currentNode.rightChild) {
-            this.remove(key, currentNode.rightChild);
+        } else if (key < currentNode.key) {
+            this._pseudocode.steps.push({ index: 11, lastStep: 0, currentNode });
+            if (currentNode.leftChild) {
+                this._pseudocode.steps.push({ index: 13, lastStep: 0, currentNode });
+                return this.remove(key, currentNode.leftChild);
+            }
+            this._pseudocode.steps.push({ index: 12, lastStep: 0, currentNode });
+            this._pseudocode.steps.push({ index: 17, lastStep: 1, currentNode });
+            this._pseudocode.steps.renderOperation(0);
+        } else if (key > currentNode.key) {
+            this._pseudocode.steps.push({ index: 14, lastStep: 0, currentNode });
+            if (currentNode.rightChild) {
+                this._pseudocode.steps.push({ index: 16, lastStep: 0, currentNode });
+                return this.remove(key, currentNode.rightChild);
+            }
+            this._pseudocode.steps.push({ index: 15, lastStep: 0, currentNode });
+            this._pseudocode.steps.push({ index: 17, lastStep: 1, currentNode });
+            this._pseudocode.steps.renderOperation(0);
         } else {
             throw new Error("В дереве нет данной вершины");
         }

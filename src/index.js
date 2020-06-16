@@ -47,7 +47,7 @@ const findButton = document.querySelector(".basic-operations__operation-title_ap
 const removeButton = document.querySelector(".basic-operations__operation-title_cross");
 const clearButton = document.querySelector(".clear-button");
 const middlePart = document.querySelector('.middle-part');
-const canvas = document.getElementById("canvas");
+// const canvas = document.getElementById("canvas");
 
 function insertButtonHandler(event) {
     const insertValue = Number.parseInt(document.querySelector(".basic-operations__input_leaf").value);
@@ -75,8 +75,9 @@ function findButtonHandler(event) {
 }
 function nodeHandler(event) {
     if (event.target.closest(".node")) {
+        pseudocode.initializeRemove();
         tree.remove(Number.parseInt(event.target.closest(".node").getAttribute('id')));
-        treeCanvas.renderTree(tree.root);
+        // treeCanvas.renderTree(tree.root);
         window.removeEventListener('click', nodeHandler);
         middlePart.classList.remove('middle-part_delete-mode');
         removeButton.classList.remove('basic-operations__operation-title_delete-mode');

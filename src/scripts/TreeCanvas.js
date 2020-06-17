@@ -27,6 +27,12 @@ export default class TreeCanvas {
         this._canvas.clear();
     }
 
+    changeNodeKey(node, value) {
+        const nodeElement = node.element;
+        const textValue = nodeElement.querySelector('.tree__node-key');
+        if (textValue) textValue.textContent = value;
+    }
+
     renderTree(currentNode) {
         if (!currentNode) {
             return this.clearCanvas();
@@ -43,7 +49,7 @@ export default class TreeCanvas {
     }
 
     renderTreeState(stateIndex) {
-        this.removeLatestInsertOperation();
+        if (stateIndex !== this.steps.length - 1) this.removeLatestInsertOperation();
         this.steps.forEach((step) => this.unhighlightNode(step.currentNode));
         let nodeToHighlight, nodeToRender;
         for (let i = 0; i <= stateIndex; ++i) {
@@ -110,6 +116,15 @@ export default class TreeCanvas {
         this.latestInsertedNode = node.node;
         const element = document.getElementById(key);
         return element;
+    }
+
+    removeNodeAndIncidentEdge(node) {
+        if (!node) return; 
+        const nodeElement = document.getElementById(`${node.key}`);
+        // let shade;
+        if (nodeElement) nodeElement.remove();
+        const edgeElement = document.getElementById(`e${node.key}`)
+        if (edgeElement) edgeElement.remove();
     }
 
     insertEdge(x1, y1, x2, y2, edgeWidth, parentNode, key, type) { // x_1, y_1 is for parent, x_2, y_2 is for child
@@ -188,7 +203,7 @@ export default class TreeCanvas {
 
     unhighlightNode(node) {
         if (!node) return; 
-        const svgElement = document.getElementById(`${node.key}`);
+        const svgElement = node.element;
         let shade;
         if (svgElement) shade = svgElement.getElementsByTagName('circle')[0];
         if (shade) shade.remove()

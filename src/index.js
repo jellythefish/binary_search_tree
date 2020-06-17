@@ -14,6 +14,7 @@ import TreeNode from './scripts/TreeNode';
 import TreeCanvas from "./scripts/TreeCanvas";
 import Pseudocode from './scripts/Pseudocode';
 import TimeController from './scripts/TimeController';
+import TreeOperations from "./scripts/TreeOperations";
 
 Menu.menuButton.addEventListener('click', Menu.menuButtonHandler);
 Menu.createTreeButton.addEventListener('click', Menu.menuCreateTreeButtonHandler);
@@ -39,68 +40,12 @@ const treeCanvas = new TreeCanvas(Snap("#canvas"));
 const timeController = new TimeController(); // таймконтроллер привязан к псевдокоду так что это логично
 const pseudocode = new Pseudocode(PseudocodeElements.pseudocodeWindow, treeCanvas, timeController);
 const tree = new Tree(null, treeCanvas, pseudocode);
+pseudocode.linkTree(tree);
 timeController.linkPseudocode(pseudocode);
 timeController.linkTreeCanvas(treeCanvas);
-
-const insertButton = document.querySelector(".basic-operations__operation-title_leaf");
-const findButton = document.querySelector(".basic-operations__operation-title_apple");
-const removeButton = document.querySelector(".basic-operations__operation-title_cross");
-const clearButton = document.querySelector(".clear-button");
-const middlePart = document.querySelector('.middle-part');
-// const canvas = document.getElementById("canvas");
-
-function insertButtonHandler(event) {
-    const insertValue = Number.parseInt(document.querySelector(".basic-operations__input_leaf").value);
-    try {
-        pseudocode.steps = [];
-        pseudocode.initializeInsert();
-        tree.insert(new TreeNode(insertValue));
-    } catch (e) {
-        alert(e.message);
-    }
-}
-function findButtonHandler(event) {
-    const findValue = Number.parseInt(document.querySelector(".basic-operations__input_apple").value); // to validate input later
-    try {
-        pseudocode.initializeFind();
-        const node = tree.find(findValue);
-        if (node) {
-            alert("Вершина найдена");
-        } else {
-            alert("Вершина не найдена");
-        }
-    } catch (e) {
-        alert(e.message);
-    }
-}
-function nodeHandler(event) {
-    if (event.target.closest(".node")) {
-        pseudocode.initializeRemove();
-        tree.remove(Number.parseInt(event.target.closest(".node").getAttribute('id')));
-        // treeCanvas.renderTree(tree.root);
-        window.removeEventListener('click', nodeHandler);
-        middlePart.classList.remove('middle-part_delete-mode');
-        removeButton.classList.remove('basic-operations__operation-title_delete-mode');
-    } else if (!event.target.classList.contains('basic-operations__operation-title_cross')) {
-        window.removeEventListener('click', nodeHandler);
-        middlePart.classList.remove('middle-part_delete-mode');
-        removeButton.classList.remove('basic-operations__operation-title_delete-mode');
-    }
-}
-function removeButtonHandler(event) {
-    middlePart.classList.add('middle-part_delete-mode');
-    removeButton.classList.add('basic-operations__operation-title_delete-mode');
-    window.addEventListener('click', nodeHandler);
-}
-function clearCanvasHandler(event) {
-    treeCanvas.clearCanvas();
-    tree.root = null;
-}
-
-insertButton.addEventListener('click', insertButtonHandler);
-findButton.addEventListener('click', findButtonHandler);
-removeButton.addEventListener('click', removeButtonHandler);
-clearButton.addEventListener('click', clearCanvasHandler);
+const treeOperations = new TreeOperations(tree, treeCanvas, pseudocode, { treeNode: TreeNode });
+timeController.linkTreeOperations(treeOperations);
+pseudocode.linkTreeOperations(treeOperations);
 
 // tree.insert(new TreeNode(50));
 // tree.insert(new TreeNode(25));
@@ -113,3 +58,4 @@ clearButton.addEventListener('click', clearCanvasHandler);
 // tree.insert(new TreeNode(60));
 // tree.insert(new TreeNode(52));
 // tree.insert(new TreeNode(54));
+// treeCanvas.renderTree(tree.root);

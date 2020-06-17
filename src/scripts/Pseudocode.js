@@ -3,6 +3,8 @@ export default class Pseudocode {
         this.container = container;
         this._treeCanvas = treeCanvas;
         this._timeController = timeController;
+        this._tree = null;
+        this._treeOperations = null;
         this._pseudocodeOperationTitle = document.querySelector('.pseudocode__operation-title');
         this._buttonClose = document.querySelector('.pseudocode__button');
         this._lines = [];
@@ -13,7 +15,11 @@ export default class Pseudocode {
         this.paused = false;
     }
 
-    async renderOperation(index) {
+    async renderOperation(index, type) {
+        // this._treeOperations.blockOperations();
+        this.paused = false;
+        this._timeController.unblockControllers();
+        if (type === 'remove') this._timeController.blockControllers();
         this._index = index;
         this._treeCanvas.steps = this.steps;
         this._treeCanvas.latestInsertedNode = null;
@@ -24,27 +30,47 @@ export default class Pseudocode {
         for (let i = index; i < this.steps.length; ++i) {
             if (this.paused) return;
             const elem = this.steps[i];
-            await this.makeStep(elem.lastStep, elem.currentNode, elem.nodeToInsert);
+            await this.makeStep(elem.lastStep, elem.currentNode, elem.nodeToInsert, elem.nodeToRemove, elem.nodeToChange, type);
         }
     }
 
-    makeStep(lastStep, nodeToHighlight, nodeToRender) {
+    makeStep(lastStep, nodeToHighlight, nodeToRender, nodeToRemove, nodeToChange, type) {
         if (nodeToHighlight) this._treeCanvas.highlightNode(nodeToHighlight);
         this.highlightLine(this._index);
+        if (nodeToChange) {
+            this._treeCanvas.highlightNode(nodeToChange.node);
+            this._treeCanvas.changeNodeKey(nodeToChange.node, nodeToChange.newKey);
+            nodeToChange.node.key = nodeToChange.newKey;
+        }
+        if (nodeToRemove && nodeToRemove.mode === 'rightChild->parent') {
+            const currentNode = nodeToRemove.node;
+            currentNode.key = currentNode.rightChild.key;
+            currentNode.rightChild = currentNode.rightChild.rightChild;
+            if (currentNode.rightChild) currentNode.rightChild.parent = currentNode; // to update right node parent
+        }
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 if (this.paused) return;
                 this._index++;
                 if (nodeToHighlight) this._treeCanvas.unhighlightNode(nodeToHighlight);
+                if (nodeToChange)  this._treeCanvas.unhighlightNode(nodeToChange.node);
                 if (nodeToRender) this._treeCanvas.renderElement(nodeToRender.node, nodeToRender.childSide);
-                this._timeController.stepForward();
-                if (lastStep) this._timeController.renderPlayPause('play');
+                if (nodeToRemove) this._treeCanvas.renderTree(this._tree.root);
+                this._timeController.stepForward(); 
+                if (lastStep) {
+                        this._treeOperations.unblockOperations();
+                    this._timeController.renderPlayPause('play');
+                }
                 resolve();
             }, this.stepSpeed * 1000 * (!lastStep));
         });
     }
     
     initializeInsert() {
+        if (this._timeController.prevOperationRenderNotFinished) {
+            // this._timeController.stepForward();
+            this._treeCanvas.renderTreeState(this._treeCanvas.steps.length - 1);
+        }
         const linesElements = this.container.querySelectorAll('.pseudocode__line-container');
         linesElements.forEach((line) => line.remove());
         this.steps = [];
@@ -165,10 +191,12 @@ export default class Pseudocode {
 
     highlightLine(stepIndex) {
         this.clearLineHighlights()
-        const lineNumber = this.steps[stepIndex].index;
-        const line = this._lines[lineNumber];
-        line.line.style.background = line.props.highlightColor;
-        line.line.children[0].style['font-weight'] = '800';
+        const lineNumber = this.steps[stepIndex];
+        if (lineNumber) {
+            const line = this._lines[lineNumber.index];
+            line.line.style.background = line.props.highlightColor;
+            line.line.children[0].style['font-weight'] = '800';
+        }
     }
 
     clearLineHighlights() {
@@ -176,5 +204,13 @@ export default class Pseudocode {
             elem.line.style.background = '';
             elem.line.children[0].style['font-weight'] = 'normal';
         })
+    }
+
+    linkTree(tree) {
+        this._tree = tree;
+    }
+
+    linkTreeOperations(treeOperations) {
+        this._treeOperations = treeOperations;
     }
 }

@@ -2,6 +2,7 @@ export default class TimeController {
     constructor() {
         this._pseudocode = null;
         this._treeCanvas = null;
+
         this._playButton = document.querySelector('.js-time-control-play');
         this._pauseButton = document.querySelector('.js-time-control-pause');
         this._nextStepButton = document.querySelector('.js-time-control-next-step');
@@ -9,16 +10,21 @@ export default class TimeController {
         this._toStartButton = document.querySelector('.js-time-control-to-start');
         this._toEndButton = document.querySelector('.js-time-control-to-end');
         this._speedPointer = document.querySelector('.time-control__speed-pointer');
+        this._timeControlButtonsContainer = document.querySelector('.time-control__buttons');
         this._timelinePointer = document.querySelector('.time-control__timeline-pointer');
-        this._timelinePointer.ondragstart = function() { return false; };
         this._timelineCurrentElement = document.querySelector('.time-control__timeline-line');
         this._timelineElement = document.querySelector('.time-control__timeline');
+
+        this._timelinePointer.ondragstart = function() { return false; };
         this._timelineTotalWidth = getComputedStyle(this._timelineElement).getPropertyValue('width').slice(0, -2);
         this._maxStepSpeed = 5;
         this._currentPointerPositionIndex = 0;
         this._timelineParts = [];
         this._partLength = null;
         this._timilineInitialized = false;
+        this._buttonsBlocked = true;
+        this.prevOperationRenderNotFinished = false;
+        this.treeOperations = null;
 
         this._mousemoveTimelineHandlerFunction = this._mousemoveTimelinePointerHandler;
         this._mousemoveTimelineHandlerFunctionObject = this._mousemoveTimelineHandlerFunction.bind(this);
@@ -52,7 +58,20 @@ export default class TimeController {
         this._renderTimelineParts(stepsLength);
     }
 
+    blockControllers() {
+        this._timelineCurrentElement.style.background = '#cccccc';
+        this._timeControlButtonsContainer.style.background = '#cccccc'
+        this._buttonsBlocked = true;
+    }
+
+    unblockControllers() {
+        this._timelineCurrentElement.style.background = '#ffc778';
+        this._timeControlButtonsContainer.style.background = '#cf8859'
+        this._buttonsBlocked = false;
+    }
+
     processControlButtton(event) {
+        if (this._buttonsBlocked) return;
         if (event.target.classList.contains('js-time-control-to-start')) {
             this.renderPlayPause('play');
             this._pseudocode.paused = true;
@@ -68,6 +87,7 @@ export default class TimeController {
             this._pseudocode.renderOperation(this._currentPointerPositionIndex);
             return this.renderPlayPause('pause');
         } else if (event.target.classList.contains('js-time-control-pause')) {
+            
             this._pseudocode.paused = true;
             return this.renderPlayPause('play');
         } else if (event.target.classList.contains('js-time-control-next-step')) {
@@ -81,9 +101,10 @@ export default class TimeController {
             if (this._currentPointerPositionIndex === this._timelineParts.length - 1) return;
             this._currentPointerPositionIndex = this._timelineParts.length - 1;
         }
+        this.prevOperationRenderNotFinished = true;
         this._timelinePointer.style.left = this._timelineParts[this._currentPointerPositionIndex] + 'px';
         this._timelineCurrentElement.style.width = this._timelineParts[this._currentPointerPositionIndex] + 8 + 'px';
-
+        if (this._currentPointerPositionIndex === this._timelineParts.length - 1) this.prevOperationRenderNotFinished = false;
         this._pseudocode.highlightLine(this._currentPointerPositionIndex);
         this._treeCanvas.renderTreeState(this._currentPointerPositionIndex);
     }
@@ -93,6 +114,7 @@ export default class TimeController {
         ++this._currentPointerPositionIndex;
         this._timelinePointer.style.left = this._timelineParts[this._currentPointerPositionIndex] + 'px';
         this._timelineCurrentElement.style.width = this._timelineParts[this._currentPointerPositionIndex] + 8 + 'px';
+        if (this._currentPointerPositionIndex === this._timelineParts.length - 1) this.prevOperationRenderNotFinished = false;
     }
 
     getCurrentStepSpeed() {
@@ -103,9 +125,11 @@ export default class TimeController {
 
     renderPlayPause(state) {
         if (state === 'play') {
+            this.treeOperations.unblockOperations();
             this._playButton.classList.remove('time-control__button_hidden');
             this._pauseButton.classList.add('time-control__button_hidden');
         } else {
+            this.treeOperations.blockOperations();
             this._playButton.classList.add('time-control__button_hidden');
             this._pauseButton.classList.remove('time-control__button_hidden');
         }
@@ -119,6 +143,7 @@ export default class TimeController {
     }
     
     _mousemoveTimelinePointerHandler(event) {
+        this.prevOperationRenderNotFinished = true;
         event.preventDefault();
         if (event.clientX - this._initialXTimelinePointer > this._partLength) {
             this._pseudocode.paused = true;
@@ -150,10 +175,12 @@ export default class TimeController {
             this._treeCanvas.renderTreeState(this._currentPointerPositionIndex);
             this._initialXTimelinePointer = event.clientX;
             this._currentTimelinePointerLeftX -= this._partLength;
-        }        
+        }       
+        if (this._currentPointerPositionIndex === this._timelineParts.length - 1) this.prevOperationRenderNotFinished = false;
     }
 
     _mousedownTimelinePointerHandler(event) {
+        if (this._buttonsBlocked) return;
         event.preventDefault();
         this._timelinePointerMoved = true;
         this._initialXTimelinePointer = event.clientX;
@@ -175,6 +202,10 @@ export default class TimeController {
 
     linkTreeCanvas(treeCanvas) {
         this._treeCanvas = treeCanvas;
+    }
+
+    linkTreeOperations(treeOperations) {
+        this.treeOperations = treeOperations;
     }
 
 

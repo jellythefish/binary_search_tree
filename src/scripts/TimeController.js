@@ -25,7 +25,7 @@ export default class TimeController {
         this._timilineInitialized = false;
         this._buttonsBlocked = true;
         this.prevOperationRenderNotFinished = false;
-        this.treeOperations = null;
+        this.BasicOperations = null;
 
         this._mousemoveTimelineHandlerFunction = this._mousemoveTimelinePointerHandler;
         this._mousemoveTimelineHandlerFunctionObject = this._mousemoveTimelineHandlerFunction.bind(this);
@@ -128,11 +128,11 @@ export default class TimeController {
 
     renderPlayPause(state) {
         if (state === 'play') {
-            this.treeOperations.unblockOperations();
+            this.BasicOperations.unblockOperations();
             this._playButton.classList.remove('time-control__button_hidden');
             this._pauseButton.classList.add('time-control__button_hidden');
         } else {
-            this.treeOperations.blockOperations();
+            this.BasicOperations.blockOperations();
             this._playButton.classList.add('time-control__button_hidden');
             this._pauseButton.classList.remove('time-control__button_hidden');
         }
@@ -207,8 +207,8 @@ export default class TimeController {
         this._treeCanvas = treeCanvas;
     }
 
-    linkTreeOperations(treeOperations) {
-        this.treeOperations = treeOperations;
+    linkBasicOperations(BasicOperations) {
+        this.BasicOperations = BasicOperations;
     }
 
     _mousemoveSpeedPointerHandler(event) {

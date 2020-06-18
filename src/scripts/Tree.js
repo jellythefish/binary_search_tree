@@ -191,30 +191,66 @@ export default class Tree {
         }
     }
 
-    inOrderTraversal(node = this.root) { // left-parent-right
-        if (!node) {
+    inOrderTraversal(currentNode = this.root) { // left-parent-right
+        if (!this.root) {
+            this._pseudocode.steps.push({ index: 0, lastStep: 0});
             return;
         }
-        this.inOrderTraversal(node.leftChild);
-        console.log(node.key);
-        this.inOrderTraversal(node.rightChild);
+        this._pseudocode.steps.push({ index: 1, lastStep: 0, currentNode});
+        if (currentNode.leftChild) {
+            this._pseudocode.steps.push({ index: 2, lastStep: 0, currentNode: currentNode.leftChild});
+            this.inOrderTraversal(currentNode.leftChild);
+        }
+        this._pseudocode.steps.push({ index: 3, lastStep: 0, currentNode});
+        this._pseudocode.steps.push({ index: 4, lastStep: 0, currentNode, nodeToTraverse: currentNode });
+        console.log(currentNode.key);
+        this._pseudocode.steps.push({ index: 5, lastStep: 0, currentNode: currentNode});
+        if (currentNode.rightChild) {
+            this._pseudocode.steps.push({ index: 6, lastStep: 0, currentNode: currentNode.rightChild});
+            this.inOrderTraversal(currentNode.rightChild);
+        }
+        this._pseudocode.steps.push({ index: 7, lastStep: 0, currentNode: currentNode.parent});
     } 
 
-    preOrderTraversal(node = this.root) { // parent-left-right
-        if (!node) {
+    preOrderTraversal(currentNode = this.root) { // parent-left-right
+        if (!this.root) {
+            this._pseudocode.steps.push({ index: 0, lastStep: 0});
             return;
         }
-        console.log(node.key);
-        this.preOrderTraversal(node.leftChild);
-        this.preOrderTraversal(node.rightChild);
+        this._pseudocode.steps.push({ index: 1, lastStep: 0, currentNode, nodeToTraverse: currentNode});
+        console.log(currentNode.key);
+        this._pseudocode.steps.push({ index: 2, lastStep: 0, currentNode});
+        if (currentNode.leftChild){
+            this._pseudocode.steps.push({ index: 3, lastStep: 0, currentNode: currentNode.leftChild });
+            this.preOrderTraversal(currentNode.leftChild);
+        }
+        this._pseudocode.steps.push({ index: 4, lastStep: 0, currentNode});
+        this._pseudocode.steps.push({ index: 5, lastStep: 0, currentNode});
+        if (currentNode.rightChild) {
+            this._pseudocode.steps.push({ index: 6, lastStep: 0, currentNode: currentNode.rightChild });
+            this.preOrderTraversal(currentNode.rightChild);
+        }   
+        this._pseudocode.steps.push({ index: 7, lastStep: 0, currentNode: currentNode.parent });
     } 
 
-    postOrderTraversal(node = this.root) { // left-right-parent
-        if (!node) {
+    postOrderTraversal(currentNode = this.root) { // left-right-parent
+        if (!this.root) {
+            this._pseudocode.steps.push({ index: 0, lastStep: 0});
             return;
         }
-        this.postOrderTraversal(node.leftChild);
-        this.postOrderTraversal(node.rightChild);
-        console.log(node.key);
+        this._pseudocode.steps.push({ index: 1, lastStep: 0, currentNode });
+        if (currentNode.leftChild) {
+            this._pseudocode.steps.push({ index: 2, lastStep: 0, currentNode: currentNode.leftChild });
+            this.postOrderTraversal(currentNode.leftChild);
+        }
+        this._pseudocode.steps.push({ index: 3, lastStep: 0, currentNode });
+        this._pseudocode.steps.push({ index: 4, lastStep: 0, currentNode });
+        if (currentNode.rightChild) {
+            this._pseudocode.steps.push({ index: 5, lastStep: 0, currentNode: currentNode.rightChild });
+            this.postOrderTraversal(currentNode.rightChild);
+        }
+        this._pseudocode.steps.push({ index: 6, lastStep: 0, currentNode });
+        this._pseudocode.steps.push({ index: 7, lastStep: 0, currentNode, nodeToTraverse: currentNode });
+        console.log(currentNode.key);
     }
 }

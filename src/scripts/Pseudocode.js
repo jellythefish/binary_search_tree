@@ -4,7 +4,7 @@ export default class Pseudocode {
         this._treeCanvas = treeCanvas;
         this._timeController = timeController;
         this._tree = null;
-        this._treeOperations = null;
+        this._BasicOperations = null;
         this._pseudocodeOperationTitle = document.querySelector('.pseudocode__operation-title');
         this._buttonClose = document.querySelector('.pseudocode__button');
         this._lines = [];
@@ -16,6 +16,7 @@ export default class Pseudocode {
     }
 
     async renderOperation(index, type) {
+        this._treeCanvas.clearTraversedNodes();
         this.paused = false;
         this._timeController.unblockControllers();
         if (type === 'remove') this._timeController.blockControllers();
@@ -29,11 +30,12 @@ export default class Pseudocode {
         for (let i = index; i < this.steps.length; ++i) {
             if (this.paused) return;
             const elem = this.steps[i];
-            await this.makeStep(elem.lastStep, elem.currentNode, elem.nodeToInsert, elem.nodeToRemove, elem.nodeToChange, type);
+            await this.makeStep(elem.lastStep, elem.currentNode, elem.nodeToInsert, elem.nodeToRemove, 
+                elem.nodeToChange, elem.nodeToTraverse, type);
         }
     }
 
-    makeStep(lastStep, nodeToHighlight, nodeToRender, nodeToRemove, nodeToChange, type) {
+    makeStep(lastStep, nodeToHighlight, nodeToRender, nodeToRemove, nodeToChange, nodeToTraverse, type) {
         if (nodeToHighlight) this._treeCanvas.highlightNode(nodeToHighlight);
         this.highlightLine(this._index);
         if (nodeToChange) {
@@ -55,9 +57,10 @@ export default class Pseudocode {
                 if (nodeToChange)  this._treeCanvas.unhighlightNode(nodeToChange.node);
                 if (nodeToRender) this._treeCanvas.renderElement(nodeToRender.node, nodeToRender.childSide);
                 if (nodeToRemove) this._treeCanvas.renderTree(this._tree.root);
+                if (nodeToTraverse) this._treeCanvas.renderTraversedNode(nodeToTraverse, type);
                 this._timeController.stepForward(); 
                 if (lastStep) {
-                        this._treeOperations.unblockOperations();
+                        this._BasicOperations.unblockOperations();
                     this._timeController.renderPlayPause('play');
                 }
                 resolve();
@@ -187,6 +190,115 @@ export default class Pseudocode {
         })
     }
 
+    initializeInOrderTraversal() {
+        const linesElements = this.container.querySelectorAll('.pseudocode__line-container');
+        linesElements.forEach((line) => line.remove());
+        this.steps = [];
+        this._lines = [];
+        this._treeCanvas.currentOperation = 'inorder';
+        const lineConstants = [
+            { text: 'Если у корня нет дерева, заканчиваем алгоритм.', indentLevel: 0, highlightColor: '#cf8859' }, 
+            { text: 'У текущей вершины есть левый ребенок?', indentLevel: 0, highlightColor: '#e7d0ad' }, 
+            { text: 'Есть: переходим в него.', indentLevel: 1, highlightColor: '#ECDABF' }, 
+            { text: 'Нет: остаемся в текущей вершине.', indentLevel: 1, highlightColor: '#ECDABF' }, 
+            { text: 'Печатаем текущую вершину.', indentLevel: 0, highlightColor: '#ECDABF' }, 
+            { text: 'У текущей вершины есть правый ребенок?', indentLevel: 0, highlightColor: '#e7d0ad' }, 
+            { text: 'Есть: текущей вершиной становится правый ребенок текущей вершины.', indentLevel: 1, highlightColor: '#ECDABF' },
+            { text: 'Нет: возвращаемся из данной вершины в родительскую.', indentLevel: 1, highlightColor: '#ECDABF' },
+            { text: 'Обход закончен.', indentLevel: 0, highlightColor: '#cf8859' }, 
+        ]
+        this._pseudocodeOperationTitle.textContent = 'In-order обход дерева'
+        this.container.style.height = '260px';
+        this.container.style.top = '400px'
+        this._buttonClose.style.top = '53px';
+        lineConstants.forEach((elem, index) => {
+            const line = document.createElement('div'); 
+            if (index === 0) line.style['border-top'] = '0.1px solid #c3a27b';
+            line.style['border-bottom'] = '0.1px solid #c3a27b';
+            line.classList.add('pseudocode__line-container');
+            const text = document.createElement('p');
+            text.classList.add('pseudocode__line');
+            text.textContent = elem.text;
+            text.style.margin = `0 0 0 ${elem.indentLevel * this.indentSize}px`;
+            line.append(text);
+            this.container.append(line);
+            this._lines.push({ line, props: elem });
+        })
+    }
+
+    initializePreOrderTraversal() {
+        const linesElements = this.container.querySelectorAll('.pseudocode__line-container');
+        linesElements.forEach((line) => line.remove());
+        this.steps = [];
+        this._lines = [];
+        this._treeCanvas.currentOperation = 'preorder';
+        const lineConstants = [
+            { text: 'Если у корня нет дерева, заканчиваем алгоритм.', indentLevel: 0, highlightColor: '#cf8859' }, 
+            { text: 'Печатаем текущую вершину.', indentLevel: 0, highlightColor: '#ECDABF' }, 
+            { text: 'У текущей вершины есть левый ребенок?', indentLevel: 0, highlightColor: '#e7d0ad' }, 
+            { text: 'Есть: переходим в него.', indentLevel: 1, highlightColor: '#ECDABF' }, 
+            { text: 'Нет: остаемся в текущей вершине.', indentLevel: 1, highlightColor: '#ECDABF' }, 
+            { text: 'У текущей вершины есть правый ребенок?', indentLevel: 0, highlightColor: '#e7d0ad' }, 
+            { text: 'Есть: текущей вершиной становится правый ребенок текущей вершины.', indentLevel: 1, highlightColor: '#ECDABF' },
+            { text: 'Нет: возвращаемся из данной вершины в родительскую.', indentLevel: 1, highlightColor: '#ECDABF' },
+            { text: 'Обход закончен.', indentLevel: 0, highlightColor: '#cf8859' }, 
+        ]
+        this._pseudocodeOperationTitle.textContent = 'Pre-order обход дерева'
+        this.container.style.height = '260px';
+        this.container.style.top = '400px'
+        this._buttonClose.style.top = '53px';
+        lineConstants.forEach((elem, index) => {
+            const line = document.createElement('div'); 
+            if (index === 0) line.style['border-top'] = '0.1px solid #c3a27b';
+            line.style['border-bottom'] = '0.1px solid #c3a27b';
+            line.classList.add('pseudocode__line-container');
+            const text = document.createElement('p');
+            text.classList.add('pseudocode__line');
+            text.textContent = elem.text;
+            text.style.margin = `0 0 0 ${elem.indentLevel * this.indentSize}px`;
+            line.append(text);
+            this.container.append(line);
+            this._lines.push({ line, props: elem });
+        })
+    }
+
+    initializePostOrderTraversal() {
+        const linesElements = this.container.querySelectorAll('.pseudocode__line-container');
+        linesElements.forEach((line) => line.remove());
+        this.steps = [];
+        this._lines = [];
+        this._treeCanvas.currentOperation = 'postorder';
+        const lineConstants = [
+            { text: 'Если у корня нет дерева, заканчиваем алгоритм.', indentLevel: 0, highlightColor: '#cf8859' }, 
+            { text: 'У текущей вершины есть левый ребенок?', indentLevel: 0, highlightColor: '#e7d0ad' }, 
+            { text: 'Есть: переходим в него.', indentLevel: 1, highlightColor: '#ECDABF' }, 
+            { text: 'Нет: остаемся в текущей вершине.', indentLevel: 1, highlightColor: '#ECDABF' }, 
+            { text: 'У текущей вершины есть правый ребенок?', indentLevel: 0, highlightColor: '#e7d0ad' }, 
+            { text: 'Есть: текущей вершиной становится правый ребенок текущей вершины.', indentLevel: 1, highlightColor: '#ECDABF' },
+            { text: 'Нет: остаемся в текущей вершине.', indentLevel: 1, highlightColor: '#ECDABF' },
+            { text: 'Печатаем текущую вершину и вовзращаемся в родительскую вершину.', indentLevel: 0, highlightColor: '#ECDABF' }, 
+            { text: 'Обход закончен.', indentLevel: 0, highlightColor: '#cf8859' }, 
+        ]
+        this._pseudocodeOperationTitle.textContent = 'Post-order обход дерева'
+        this.container.style.height = '260px';
+        this.container.style.top = '400px'
+        this._buttonClose.style.top = '53px';
+        lineConstants.forEach((elem, index) => {
+            const line = document.createElement('div'); 
+            if (index === 0) line.style['border-top'] = '0.1px solid #c3a27b';
+            line.style['border-bottom'] = '0.1px solid #c3a27b';
+            line.classList.add('pseudocode__line-container');
+            const text = document.createElement('p');
+            text.classList.add('pseudocode__line');
+            text.textContent = elem.text;
+            text.style.margin = `0 0 0 ${elem.indentLevel * this.indentSize}px`;
+            line.append(text);
+            this.container.append(line);
+            this._lines.push({ line, props: elem });
+        })
+    }
+
+
     highlightLine(stepIndex) {
         this.clearLineHighlights()
         const lineNumber = this.steps[stepIndex];
@@ -208,7 +320,7 @@ export default class Pseudocode {
         this._tree = tree;
     }
 
-    linkTreeOperations(treeOperations) {
-        this._treeOperations = treeOperations;
+    linkBasicOperations(BasicOperations) {
+        this._BasicOperations = BasicOperations;
     }
 }

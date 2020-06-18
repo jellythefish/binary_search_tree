@@ -1,0 +1,3 @@
+.tree__node-key_fast-mode {
+    animation: grow-text 3s cubic-bezier(0.99,-0.02, 0.08, 0.9) forwards !important;
+}

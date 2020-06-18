@@ -17,10 +17,13 @@ export default class TreeCanvas {
         this._nodeKeyPositionYSun = '52%';
         this._edgeDegreeAlignmenet = 90;
         this._edgeVerticalAlignment = 25;
+        this._traversalNodesLineY = 600;
         this.steps = [];
         this.currentOperation = null;
         this.latestInsertedEdge = null;
         this.latestInsertedNode = null;
+        this.traversedNodeOffset = null;
+        this.traversedNodeTotalOffset = 100;
     }
 
     clearCanvas() {
@@ -90,12 +93,36 @@ export default class TreeCanvas {
         }
     }
 
-    insertNode(x, y, key, type) {
+    renderTraversedNode(node, type) {
+        const element = node.element;
+        const nodeNumber = document.querySelectorAll('.node').length;
+        console.log(nodeNumber);
+        if (!this.traversedNodeOffset) this.traversedNodeOffset = 1240 / nodeNumber ;
+        let nodeX;
+        if (type === 'inorder') {
+            nodeX = Number.parseInt(element.getAttribute('x'));
+            if (nodeX !== 685) nodeX -= this._centerAlignmentOfNode;
+        } else if (type === 'preorder' || type === 'postorder') {
+            nodeX = this.traversedNodeTotalOffset;
+            this.traversedNodeTotalOffset += this.traversedNodeOffset;
+        }
+        this.insertNode(nodeX, this._traversalNodesLineY, node.key, "apple", true);
+    }
+
+    clearTraversedNodes() {
+        this.traversedNodeOffset = null;
+        this.traversedNodeTotalOffset = 100;
+        const nodes = document.querySelectorAll('.traversed');
+        nodes.forEach((node) => node.remove());
+    }
+
+    insertNode(x, y, key, type, fastMode = false) {
         let node, img, text;
         if (type === "apple") {
             node = this._canvas.paper.svg(x + this._centerAlignmentOfNode, y, this._appleWidth, this._appleHeight);
             img = this._canvas.paper.image("./images/apple.svg", 0, 0, this._appleWidth, this._appleHeight);
-            img.attr({ class: "tree__apple" });
+            if (fastMode) img.attr({ class: `tree__apple tree__apple_fast-mode` });
+            else img.attr({ class: `tree__apple` });
             text = this._canvas.paper.text(this._nodeKeyPositionXApple, this._nodeKeyPositionYApple, key);
         } else {
             img = this._canvas.paper.image("./images/sun.svg", 0, 0, this._sunWidth, this._sunHeight);
@@ -103,9 +130,10 @@ export default class TreeCanvas {
             node = this._canvas.paper.svg(x, y, this._sunWidth, this._sunHeight);
             text = this._canvas.paper.text(this._nodeKeyPositionXSun, this._nodeKeyPositionYSun, key);
         }
-        node.attr({ id: key, class: "node", style: "overflow: auto;" });
+        node.attr({ id: key, class: fastMode ? 'node traversed': "node", style: "overflow: auto;" });
+        if (fastMode) text.attr({ "class": "tree__node-key tree__node-key_fast-mode" });
+        else text.attr({ "class": "tree__node-key" });
         text.attr({
-            "class": "tree__node-key",
             "fill": "white",
             "dominant-baseline": "middle",
             "text-anchor": "middle"

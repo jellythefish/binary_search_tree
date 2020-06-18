@@ -51,7 +51,7 @@
             <main class="content">
                 
                 <section class="upper-toolbar">
-                    <div class=avl>
+                    <div class=avl style="display: none;">
                         <div class="avl__status">
                             <img src="<%= require('./images/avl-status-red.svg').default %>" class="avl__led">
                             <h4 class="avl__status-message">Дерево несбалансировано</h4>
@@ -65,7 +65,7 @@
                             <h4 class="avl__title">AVL-Дерево</h4>
                         </div>
                     </div>
-                    <div class="tasks-list">
+                    <div class="tasks-list" style="margin: 0 auto 0;">
                         <div class="task">
                             <button class="task__button">
                                 Операции обхода дерева
@@ -73,19 +73,19 @@
                             </button>
                             <ul class="task__container task__container_traversal">
                                 <li class="task__option-item">
-                                    <button class="task__option">
+                                    <button class="task__option js-inorder-button">
                                         <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
                                         Inorder traversal
                                     </button>
                                 </li>
                                 <li class="task__option-item">
-                                    <button class="task__option">
+                                    <button class="task__option js-preorder-button">
                                         <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
                                         Preorder traversal
                                     </button>
                                 </li>
                                 <li class="task__option-item">
-                                    <button class="task__option">
+                                    <button class="task__option js-postorder-button">
                                         <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
                                         Postorder traversal
                                     </button>

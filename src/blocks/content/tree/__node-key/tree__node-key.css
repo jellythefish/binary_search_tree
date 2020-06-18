@@ -1,3 +1,5 @@
+@import url(./_fast-mode/tree__node-key_fast-mode.css);
+
 @keyframes grow-text {
     from {
         font-size: 0px;

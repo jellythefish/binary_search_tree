@@ -1,9 +1,12 @@
-export default class TreeOperations {
+export default class BasicOperations {
     constructor(tree, treeCanvas, pseudocode, dependencies) {
         this._pseudocode = pseudocode;
         this._tree = tree;
         this._treeCanvas = treeCanvas;
         
+        this.basicOpsWindow = document.querySelector(".basic-operations");
+        this.basicOpsButton = document.querySelector(".basic-operations__button");
+        this.basicOpsButton.ondragstart = () => false;
         this.insertButton = document.querySelector('.basic-operations__operation-title_leaf');
         this.insertInput = document.querySelector(".basic-operations__input_leaf");
         this.findButton = document.querySelector('.basic-operations__operation-title_apple');
@@ -14,15 +17,21 @@ export default class TreeOperations {
         this.canvas = document.getElementById("canvas");
         this.TreeNode = dependencies.treeNode;
         this.operationsBlocked = false;
-            
+
         this.insertButton.addEventListener('click', this.insertButtonHandler.bind(this));
         this.findButton.addEventListener('click', this.findButtonHandler.bind(this));
         this.removeButton.addEventListener('click', this.removeButtonHandler.bind(this));
         this.clearButton.addEventListener('click', this.clearCanvasHandler.bind(this));
-    
-    
+        this.basicOpsButton.addEventListener('mousedown', this._mousedownBasicOpsButtonHandler.bind(this));
+        window.addEventListener('mouseup', this._mouseupBasicOpsButtonHandler.bind(this));
+
+        this.initialXBasOp = null, this.newXBasOp = null, this.currentBasicOpsWindowLeftX = null;
+        this.basicOpsButtonMoved = false;
+
         this._nodeHandlerFunction = this.nodeHandler;
         this._nodeHandlerFunctionObject = this._nodeHandlerFunction.bind(this);
+        this._mousemoveBasicOpsHandlerFunction = this._mousemoveBasicOpsButtonHandler;
+        this._mousemoveBasicOpsHandlerFunctionObject = this._mousemoveBasicOpsHandlerFunction.bind(this);
     }
 
     blockOperations() {
@@ -109,6 +118,42 @@ export default class TreeOperations {
             this.canvas.removeEventListener('click', this._nodeHandlerFunctionObject);
             this.middlePart.classList.remove('middle-part_delete-mode');
             this.removeButton.classList.remove('basic-operations__operation-title_delete-mode');
+        }
+    }
+
+    _mousemoveBasicOpsButtonHandler(event) {
+        event.preventDefault(); 
+        let difference = event.clientX - this.initialXBasOp;
+        this.newXBasOp = this.currentBasicOpsWindowLeftX + difference;
+        if (this.newXBasOp >= -290 && this.newXBasOp <= 0) {
+            this.basicOpsWindow.style.left = this.newXBasOp + 'px';
+        }
+    }
+
+    _mousedownBasicOpsButtonHandler(event) {
+        event.preventDefault();
+        this.basicOpsButtonMoved = true;
+        this.initialXBasOp = event.clientX;
+        let basicOpsWindowStyle = getComputedStyle(this.basicOpsWindow);
+        this.currentBasicOpsWindowLeftX = Number.parseInt(basicOpsWindowStyle.getPropertyValue('left').slice(0, -2));
+        window.addEventListener('mousemove', this._mousemoveBasicOpsHandlerFunctionObject);
+    }
+
+    _mouseupBasicOpsButtonHandler(event) {
+        if (this.basicOpsButtonMoved) {
+            this._processWindowPosition();
+            window.removeEventListener('mousemove', this._mousemoveBasicOpsHandlerFunctionObject);
+            this.basicOpsButtonMoved = false;
+        }
+    }
+
+    _processWindowPosition() {
+        if (this.newXBasOp > -145) {
+            this.basicOpsWindow.style.left = '0px';
+            this.basicOpsButton.classList.remove('basic-operations__button_open');
+        } else {
+            this.basicOpsWindow.style.left = '-290px';
+            this.basicOpsButton.classList.add('basic-operations__button_open');
         }
     }
 }

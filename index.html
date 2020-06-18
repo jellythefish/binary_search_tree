@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Двоичное Дерево Поиска</title>
-    <link rel="stylesheet" href="style.5bba511cfb0a3b5770d3.css">
+    <link rel="stylesheet" href="style.46cf7b6ff9d09ef0d555.css">
 </html>
 <body>
     <div class="page-wrapper">
@@ -16,30 +16,27 @@
                     <img src="./images/menu-arrow.svg" alt="menu arrow" class="menu__arrow">
                     <ul class="menu__options">
                         <li class="menu__option-item">
-                            <button class="menu__button menu__button_option">Создать дерево...</button>
+                            <button class="menu__button menu__button_option js-create-tree">Создать дерево...</button>
                         </li>
                         <li class="menu__option-item">
-                            <button class="menu__button menu__button_option">Сохранить конфигурацию</button>
+                            <button class="menu__button menu__button_option js-save-config">Сохранить конфигурацию</button>
                         </li>
                         <li class="menu__option-item">
-                            <button class="menu__button menu__button_option">Загрузить конфигурацию...</button>
+                            <button class="menu__button menu__button_option js-load-config">Загрузить конфигурацию...</button>
                         </li>
                     </ul>
                     <ul class="menu__suboptions">
                         <li class="menu__suboption-item">
-                            <button class="menu__button menu__button_suboption">Пустое</button>
+                            <button class="menu__button menu__button_suboption js-random-tree">Случайное</button>
                         </li>
                         <li class="menu__suboption-item">
-                            <button class="menu__button menu__button_suboption">Случайное</button>
+                            <button class="menu__button menu__button_suboption js-worst-tree">Худший случай</button>
                         </li>
                         <li class="menu__suboption-item">
-                            <button class="menu__button menu__button_suboption">Худший случай</button>
+                            <button class="menu__button menu__button_suboption js-middle-tree">Средний случай</button>
                         </li>
                         <li class="menu__suboption-item">
-                            <button class="menu__button menu__button_suboption">Средний случай</button>
-                        </li>
-                        <li class="menu__suboption-item">
-                            <button class="menu__button menu__button_suboption">Лучший случай</button>
+                            <button class="menu__button menu__button_suboption js-best-tree">Лучший случай</button>
                         </li>
                     </ul>
                 </menu>
@@ -54,7 +51,7 @@
             <main class="content">
                 
                 <section class="upper-toolbar">
-                    <div class=avl>
+                    <div class=avl style="display: none;">
                         <div class="avl__status">
                             <img src="./images/avl-status-red.svg" class="avl__led">
                             <h4 class="avl__status-message">Дерево несбалансировано</h4>
@@ -68,7 +65,7 @@
                             <h4 class="avl__title">AVL-Дерево</h4>
                         </div>
                     </div>
-                    <div class="tasks-list">
+                    <div class="tasks-list" style="margin: 0 auto 0;">
                         <div class="task">
                             <button class="task__button">
                                 Операции обхода дерева
@@ -76,19 +73,19 @@
                             </button>
                             <ul class="task__container task__container_traversal">
                                 <li class="task__option-item">
-                                    <button class="task__option">
+                                    <button class="task__option js-inorder-button">
                                         <img src="./images/task-point.svg" class="task__option-image" alt="option-point">
                                         Inorder traversal
                                     </button>
                                 </li>
                                 <li class="task__option-item">
-                                    <button class="task__option">
+                                    <button class="task__option js-preorder-button">
                                         <img src="./images/task-point.svg" class="task__option-image" alt="option-point">
                                         Preorder traversal
                                     </button>
                                 </li>
                                 <li class="task__option-item">
-                                    <button class="task__option">
+                                    <button class="task__option js-postorder-button">
                                         <img src="./images/task-point.svg" class="task__option-image" alt="option-point">
                                         Postorder traversal
                                     </button>
@@ -126,32 +123,6 @@
                                     </button>
                                 </li>                                
                             </ul>
-                        </div>
-                        <div class="task">
-                            <button class="task__button">
-                                Задачи
-                                <img src="./images/tasks-arrow-down.svg" class=task__button-image alt="arrow-down">
-                            </button>
-                            <div class="task__container task__container_problems">
-                                <li class="task__option-item">
-                                    <button class="task__option task__option_problems">
-                                        <img src="./images/task-point.svg" class="task__option-image" alt="option-point">
-                                        Проверка дерева на принадлежность к двоичным деревьям поиска
-                                    </button>
-                                </li>
-                                <li class="task__option-item">
-                                    <button class="task__option task__option_problems">
-                                        <img src="./images/task-point.svg" class="task__option-image" alt="option-point">
-                                        Поиск максимального двоичного дерева поиска
-                                    </button>
-                                </li>
-                                <li class="task__option-item">
-                                    <button class="task__option task__option_problems">
-                                        <img src="./images/task-point.svg" class="task__option-image" alt="option-point">
-                                        Восстановление дерева по результату обхода Preorder traversal
-                                    </button>
-                                </li>
-                            </div>
                         </div>
                     </div>
                     <a href="https://github.com/jellythefish/binary_search_tree" target="_blank" class="github-link">
@@ -191,7 +162,8 @@
                         <button class="theory__button"></button>
                     </div>
 
-                    <div class="pseudocode" style="right: 0px">
+                    <div class="pseudocode">
+                        <p class="pseudocode__operation-title"></p>
                         <button class="pseudocode__button"></button>
                     </div> 
 
@@ -206,6 +178,7 @@
 
                     <div class="time-control">
                         <div class="time-control__panel">
+                            <p class="time-control__text">Медленнее</p>
                             <div class="time-control__speed">
                                 <h5 class="time-control__speed-title">Скорость</h5>
                                 <div class="time-control__speed-switch">
@@ -213,12 +186,14 @@
                                     <div class="time-control__speed-pointer"></div>
                                 </div>
                             </div>
+                            <p class="time-control__text">Быстрее</p>
                             <div class="time-control__buttons">
-                                <img class="time-control__button" src="./images/to-beginning.svg">
-                                <img class="time-control__button" src="./images/previous-step.svg">
-                                <img class="time-control__button" src="./images/play.svg">
-                                <img class="time-control__button" src="./images/next-step.svg">
-                                <img class="time-control__button" src="./images/to-end.svg">
+                                <img class="time-control__button js-time-control-to-start" src="./images/to-start.svg">
+                                <img class="time-control__button js-time-control-prev-step" src="./images/previous-step.svg">
+                                <img class="time-control__button js-time-control-play" src="./images/play.svg">
+                                <img class="time-control__button time-control__button_hidden js-time-control-pause" src="./images/pause.svg">
+                                <img class="time-control__button js-time-control-next-step" src="./images/next-step.svg">
+                                <img class="time-control__button js-time-control-to-end" src="./images/to-end.svg">
                             </div>
                         </div>
                         <div class="time-control__timeline">
@@ -233,5 +208,5 @@
         </div>
     </div>
     <script src="./vendor/snap.svg-min.js"> </script> 
-    <script type="application/javascript" src="main.8135ff5a28df5a7090a3.js"></script>
+    <script type="application/javascript" src="main.e0b09b55dfaacbb6ec7c.js"></script>
 </body>

@@ -63,6 +63,7 @@ export default class TreeOperations {
             this._pseudocode.steps = [];
             this._pseudocode.initializeInsert();
             this._tree.insert(new this.TreeNode(insertValue));
+            this._pseudocode.renderOperation(0, 'insert');
         } catch (e) {
             alert(e.message);
         }

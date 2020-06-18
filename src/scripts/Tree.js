@@ -15,7 +15,7 @@ export default class Tree {
             this.root.type = "root";
             this._pseudocode.steps.push({ index: 1, lastStep: 0, currentNode });
             this._pseudocode.steps.push({ index: 10, lastStep: 1, currentNode, nodeToInsert: { node: this.root } });
-            this._pseudocode.renderOperation(0, 'insert');
+            // this._pseudocode.renderOperation(0, 'insert');
             return;
         }
         this._pseudocode.steps.push({ index: 2, lastStep: 0, currentNode });
@@ -27,7 +27,7 @@ export default class Tree {
                 currentNode.leftChild.parent = currentNode;
                 this._pseudocode.steps.push({ index: 4, lastStep: 0, currentNode });
                 this._pseudocode.steps.push({ index: 10, lastStep: 1, currentNode, nodeToInsert: { node: currentNode, childSide: "left" } });
-                this._pseudocode.renderOperation(0, 'insert');
+                // this._pseudocode.renderOperation(0, 'insert');
             } else {
                 this._pseudocode.steps.push({ index: 5, lastStep: 0, currentNode });
                 this.insert(node, currentNode.leftChild);
@@ -45,7 +45,7 @@ export default class Tree {
                 currentNode.rightChild.parent = currentNode;
                 this._pseudocode.steps.push({ index: 8, lastStep: 0, currentNode });
                 this._pseudocode.steps.push({ index: 10, lastStep: 1, currentNode, nodeToInsert: { node: currentNode, childSide: "right" } });
-                this._pseudocode.renderOperation(0, 'insert');
+                // this._pseudocode.renderOperation(0, 'insert');
             } else {
                 this._pseudocode.steps.push({ index: 9, lastStep: 0, currentNode });
                 this.insert(node, currentNode.rightChild);

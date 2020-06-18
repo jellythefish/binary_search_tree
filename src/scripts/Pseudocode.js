@@ -16,7 +16,6 @@ export default class Pseudocode {
     }
 
     async renderOperation(index, type) {
-        // this._treeOperations.blockOperations();
         this.paused = false;
         this._timeController.unblockControllers();
         if (type === 'remove') this._timeController.blockControllers();
@@ -68,7 +67,6 @@ export default class Pseudocode {
     
     initializeInsert() {
         if (this._timeController.prevOperationRenderNotFinished) {
-            // this._timeController.stepForward();
             this._treeCanvas.renderTreeState(this._treeCanvas.steps.length - 1);
         }
         const linesElements = this.container.querySelectorAll('.pseudocode__line-container');

@@ -15,7 +15,8 @@ export default class TimeController {
         this._timelineCurrentElement = document.querySelector('.time-control__timeline-line');
         this._timelineElement = document.querySelector('.time-control__timeline');
 
-        this._timelinePointer.ondragstart = function() { return false; };
+        this._timelinePointer.ondragstart = () => false;
+        this._speedPointer.ondragstart = () => false;
         this._timelineTotalWidth = getComputedStyle(this._timelineElement).getPropertyValue('width').slice(0, -2);
         this._maxStepSpeed = 5;
         this._currentPointerPositionIndex = 0;
@@ -28,14 +29,16 @@ export default class TimeController {
 
         this._mousemoveTimelineHandlerFunction = this._mousemoveTimelinePointerHandler;
         this._mousemoveTimelineHandlerFunctionObject = this._mousemoveTimelineHandlerFunction.bind(this);
+        this._mousemoveSpeedPointerHandlerFunction = this._mousemoveSpeedPointerHandler;
+        this._mousemoveSpeedPointerHandlerFunctionObject = this._mousemoveSpeedPointerHandlerFunction.bind(this);
 
-        this._initialXTimelinePointer = null;
-        this._newXTimelinePointer = null;
-        this._currentTimelinePointerLeftX = null;
-        this._timelinePointerMoved = false;
+        this._initialXTimelinePointer = null, this._initialXSpeedPointer = null;
+        this._newXTimelinePointer = null, this._newXSpeedPointer = null;
+        this._currentTimelinePointerLeftX = null, this._currentSpeedPointerLeftX = null;
+        this._timelinePointerMoved = false, this._speedPointerMoved = null;
 
-        // this._speedPointer.addEventListener('mousedown', this._mousedownSpeedPointerHandler.bind(this));
-        // window.addEventListener('mouseup', this._mouseupSpeedPointerHandler.bind(this));
+        this._speedPointer.addEventListener('mousedown', this._mousedownSpeedPointerHandler.bind(this));
+        window.addEventListener('mouseup', this._mouseupSpeedPointerHandler.bind(this));
     }
 
     initializeTimeline(stepsLength) {
@@ -208,39 +211,28 @@ export default class TimeController {
         this.treeOperations = treeOperations;
     }
 
+    _mousemoveSpeedPointerHandler(event) {
+        event.preventDefault();
+        let difference = event.clientX - this._initialXSpeedPointer;
+        this._newXSpeedPointer = this._currentSpeedPointerLeftX + difference;
+        if (this._newXSpeedPointer >= 2 && this._newXSpeedPointer <= 96) {
+            this._speedPointer.style.left = this._newXSpeedPointer + 'px';
+        }
+    }
 
-// SPEED POINTER 
+    _mousedownSpeedPointerHandler(event) {
+        event.preventDefault();
+        this._speedPointerMoved = true;
+        this._initialXSpeedPointer = event.clientX;
+        let speedPointerStyle = getComputedStyle(this._speedPointer);
+        this._currentSpeedPointerLeftX = Number.parseInt(speedPointerStyle.getPropertyValue('left').slice(0, -2));
+        window.addEventListener('mousemove', this._mousemoveSpeedPointerHandlerFunctionObject);
+    }
 
-
-// const speedPointer = document.querySelector('.time-control__speed-pointer');
-// let initialXSpeedPointer, newXSpeedPointer, currentSpeedPointerLeftX, speedPointerMoved = false;
-
-// speedPointer.ondragstart = function() {
-//     return false;
-// };
-
-// function mousemoveSpeedPointerHandler(event) {
-//     event.preventDefault();
-//     let difference = event.clientX - initialXSpeedPointer;
-//     newXSpeedPointer = currentSpeedPointerLeftX + difference;
-//     if (newXSpeedPointer >= 2 && newXSpeedPointer <= 96) {
-//         speedPointer.style.left = newXSpeedPointer + 'px';
-//     }
-// }
-
-// function mousedownSpeedPointerHandler(event) {
-//     event.preventDefault();
-//     speedPointerMoved = true;
-//     initialXSpeedPointer = event.clientX;
-//     let speedPointerStyle = getComputedStyle(speedPointer);
-//     currentSpeedPointerLeftX = Number.parseInt(speedPointerStyle.getPropertyValue('left').slice(0, -2));
-//     window.addEventListener('mousemove', mousemoveSpeedPointerHandler);
-// }
-
-// function mouseupSpeedPointerHandler(event) {
-//     if (speedPointerMoved) {
-//         window.removeEventListener('mousemove', mousemoveSpeedPointerHandler);
-//         speedPointerMoved = false;
-//     }
-// }
+    _mouseupSpeedPointerHandler(event) {
+        if (this._speedPointerMoved) {
+            window.removeEventListener('mousemove', this._mousemoveSpeedPointerHandlerFunctionObject);
+            this._speedPointerMoved = false;
+        }
+    }
 }

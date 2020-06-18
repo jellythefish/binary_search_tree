@@ -16,30 +16,27 @@
                     <img src="<%= require('./images/menu-arrow.svg').default %>" alt="menu arrow" class="menu__arrow">
                     <ul class="menu__options">
                         <li class="menu__option-item">
-                            <button class="menu__button menu__button_option">Создать дерево...</button>
+                            <button class="menu__button menu__button_option js-create-tree">Создать дерево...</button>
                         </li>
                         <li class="menu__option-item">
-                            <button class="menu__button menu__button_option">Сохранить конфигурацию</button>
+                            <button class="menu__button menu__button_option js-save-config">Сохранить конфигурацию</button>
                         </li>
                         <li class="menu__option-item">
-                            <button class="menu__button menu__button_option">Загрузить конфигурацию...</button>
+                            <button class="menu__button menu__button_option js-load-config">Загрузить конфигурацию...</button>
                         </li>
                     </ul>
                     <ul class="menu__suboptions">
                         <li class="menu__suboption-item">
-                            <button class="menu__button menu__button_suboption">Пустое</button>
+                            <button class="menu__button menu__button_suboption js-random-tree">Случайное</button>
                         </li>
                         <li class="menu__suboption-item">
-                            <button class="menu__button menu__button_suboption">Случайное</button>
+                            <button class="menu__button menu__button_suboption js-worst-tree">Худший случай</button>
                         </li>
                         <li class="menu__suboption-item">
-                            <button class="menu__button menu__button_suboption">Худший случай</button>
+                            <button class="menu__button menu__button_suboption js-middle-tree">Средний случай</button>
                         </li>
                         <li class="menu__suboption-item">
-                            <button class="menu__button menu__button_suboption">Средний случай</button>
-                        </li>
-                        <li class="menu__suboption-item">
-                            <button class="menu__button menu__button_suboption">Лучший случай</button>
+                            <button class="menu__button menu__button_suboption js-best-tree">Лучший случай</button>
                         </li>
                     </ul>
                 </menu>
@@ -127,32 +124,6 @@
                                 </li>                                
                             </ul>
                         </div>
-                        <!-- <div class="task">
-                            <button class="task__button">
-                                Задачи
-                                <img src="<%= require('./images/tasks-arrow-down.svg').default %>" class=task__button-image alt="arrow-down">
-                            </button>
-                            <div class="task__container task__container_problems">
-                                <li class="task__option-item">
-                                    <button class="task__option task__option_problems">
-                                        <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
-                                        Проверка дерева на принадлежность к двоичным деревьям поиска
-                                    </button>
-                                </li>
-                                <li class="task__option-item">
-                                    <button class="task__option task__option_problems">
-                                        <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
-                                        Поиск максимального двоичного дерева поиска
-                                    </button>
-                                </li>
-                                <li class="task__option-item">
-                                    <button class="task__option task__option_problems">
-                                        <img src="<%= require('./images/task-point.svg').default %>" class="task__option-image" alt="option-point">
-                                        Восстановление дерева по результату обхода Preorder traversal
-                                    </button>
-                                </li>
-                            </div>
-                        </div> -->
                     </div>
                     <a href="https://github.com/jellythefish/binary_search_tree" target="_blank" class="github-link">
                         <h2 class="github-link__title">View on github</h2>
@@ -165,7 +136,7 @@
                         <svg id="canvas" width="1440px" height="660px"></svg>
                     </div>
 
-                    <div class="basic-operations" style="left: 0px">
+                    <div class="basic-operations">
                         <h3 class="basic-operations__title">Основные операции</h3>
                         <p class="basic-operations__avl-status">(AVL)</h4>
                         <div class="basic-operations__operation">
@@ -191,7 +162,7 @@
                         <button class="theory__button"></button>
                     </div>
 
-                    <div class="pseudocode" style="right: 0px">
+                    <div class="pseudocode">
                         <p class="pseudocode__operation-title"></p>
                         <button class="pseudocode__button"></button>
                     </div> 
@@ -212,7 +183,7 @@
                                 <h5 class="time-control__speed-title">Скорость</h5>
                                 <div class="time-control__speed-switch">
                                     <div class="time-control__speed-line"></div>
-                                    <div class="time-control__speed-pointer" style="left: 90px"></div>
+                                    <div class="time-control__speed-pointer"></div>
                                 </div>
                             </div>
                             <p class="time-control__text">Быстрее</p>

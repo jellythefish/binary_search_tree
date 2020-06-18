@@ -3,21 +3,17 @@ import "./vendor/snap.svg-min.js";
 import "./images/sun.svg";
 import "./images/branch-left.svg"
 import "./images/branch-right.svg"
-import * as Menu from './blocks/menu/menu.js';
 import * as Switch from './blocks/content/upper-toolbar/switch/switch.js';
 import * as BasicOperations from './blocks/content/middle-part/basic-operations/basic-operations.js';
 import * as Theory from './blocks/content/middle-part/theory/theory.js';
 import * as PseudocodeElements from './blocks/content/middle-part/pseudocode/pseudocode.js';
-import * as Speed from './blocks/content/lower-toolbar/time-control/__speed/time-control__speed.js';
 import Tree from './scripts/Tree';
 import TreeNode from './scripts/TreeNode';
 import TreeCanvas from "./scripts/TreeCanvas";
 import Pseudocode from './scripts/Pseudocode';
 import TimeController from './scripts/TimeController';
 import TreeOperations from "./scripts/TreeOperations";
-
-Menu.menuButton.addEventListener('click', Menu.menuButtonHandler);
-Menu.createTreeButton.addEventListener('click', Menu.menuCreateTreeButtonHandler);
+import Menu from "./scripts/Menu";
 
 Switch.circle.addEventListener('mousedown', Switch.mousedownCircleHandler);
 window.addEventListener('mouseup', Switch.mouseupCircleHandler);
@@ -31,15 +27,13 @@ window.addEventListener('mouseup', Theory.mouseupTheoryButtonHandler);
 PseudocodeElements.pseudocodeButton.addEventListener('mousedown', PseudocodeElements.mousedownPseudocodeButtonHandler);
 window.addEventListener('mouseup', PseudocodeElements.mouseupPseudocodeButtonHandler);
 
-Speed.speedPointer.addEventListener('mousedown', Speed.mousedownSpeedPointerHandler);
-window.addEventListener('mouseup', Speed.mouseupSpeedPointerHandler);
-
 // tree initializing
 
 const treeCanvas = new TreeCanvas(Snap("#canvas"));
 const timeController = new TimeController(); // таймконтроллер привязан к псевдокоду так что это логично
 const pseudocode = new Pseudocode(PseudocodeElements.pseudocodeWindow, treeCanvas, timeController);
 const tree = new Tree(null, treeCanvas, pseudocode);
+const menu = new Menu(tree, treeCanvas, { treeNode: TreeNode });
 pseudocode.linkTree(tree);
 timeController.linkPseudocode(pseudocode);
 timeController.linkTreeCanvas(treeCanvas);

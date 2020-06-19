@@ -14,6 +14,7 @@ import TimeController from './scripts/TimeController';
 import BasicOperations from "./scripts/BasicOperations";
 import Menu from "./scripts/Menu";
 import Traversals from "./scripts/Traversals";
+import AdditionalOperations from "./scripts/AdditionalOperations";
 
 Switch.circle.addEventListener('mousedown', Switch.mousedownCircleHandler);
 window.addEventListener('mouseup', Switch.mouseupCircleHandler);
@@ -38,6 +39,7 @@ const basicOperations = new BasicOperations(tree, treeCanvas, pseudocode, { tree
 timeController.linkBasicOperations(basicOperations);
 pseudocode.linkBasicOperations(basicOperations);
 const traversals = new Traversals(tree, treeCanvas, pseudocode);
+const additionalOperations = new AdditionalOperations(tree, treeCanvas, pseudocode);
 
 // tree.insert(new TreeNode(50));
 // tree.insert(new TreeNode(25));

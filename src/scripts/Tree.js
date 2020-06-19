@@ -253,4 +253,32 @@ export default class Tree {
         this._pseudocode.steps.push({ index: 7, lastStep: 0, currentNode, nodeToTraverse: currentNode });
         console.log(currentNode.key);
     }
+
+    findMin(currentNode = this.root) {
+        if (!this.root) {
+            return;
+        }
+        if (currentNode.leftChild) {
+            return this.findMin(currentNode.leftChild);
+        }
+        return currentNode;
+    }
+
+    findMax(currentNode = this.root) {
+        if (!this.root) {
+            return;
+        }
+        if (currentNode.rightChild) {
+            return this.findMax(currentNode.rightChild);
+        }
+        return currentNode;
+    }
+
+    findPredecessor() {
+
+    }
+
+    findSuccessor() {
+
+    }
 }

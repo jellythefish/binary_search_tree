@@ -1,5 +1,6 @@
 @import url(./basic-operations/basic-operations.css);
 @import url(./_delete-mode/middle-part_delete-mode.css);
+@import url(./_find-node-mode/middle-part_find-node-mode.css);
 @import url(./pseudocode/pseudocode.css);
 @import url(./theory/theory.css);
 @import url(./canvas/canvas.css);

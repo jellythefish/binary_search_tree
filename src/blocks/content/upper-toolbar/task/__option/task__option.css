@@ -1,4 +1,5 @@
 @import url(./_problems/task__option_problems.css);
+@import url(./_find-node-mode/task__option_find-node-mode.css);
 
 .task__option {
     height: 41px;

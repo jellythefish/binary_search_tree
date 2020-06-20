@@ -68,6 +68,9 @@ export default class BasicOperations {
     insertButtonHandler(event) {
         if (this.operationsBlocked) return;
         const insertValue = Number.parseInt(this.insertInput.value);
+        if (Number.isNaN(insertValue)) {
+            return alert('Не указана вершина для вставки.');
+        }
         try {
             this._pseudocode.steps = [];
             this._pseudocode.initializeInsert();

@@ -84,6 +84,7 @@ export default class BasicOperations {
         try {
             this._pseudocode.initializeFind();
             const node = this._tree.find(findValue);
+            this._pseudocode.renderOperation(0, 'find');
             if (node) {
                 alert("Вершина найдена");
             } else {

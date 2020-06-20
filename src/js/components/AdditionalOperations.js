@@ -26,26 +26,17 @@ export default class AdditionalOperations {
     _findMin() {
         if (this.operationsBlocked) return;
         this._treeCanvas.clearTraversedNodes();
-        // this._pseudocode.initializeFindMin();
-        console.log(this._tree.findMin());
-        // this._pseudocode.steps.push({ index: 8, lastStep: 1 });
-        // this._pseudocode.renderOperation(0, 'findMin');
+        this._pseudocode.initializeFindMin();
+        this._tree.findMin();
+        this._pseudocode.renderOperation(0, 'findMin');
     }
 
     _findMax() {
         if (this.operationsBlocked) return;
         this._treeCanvas.clearTraversedNodes();
-        // this._pseudocode.initializeFindMax();
-        console.log(this._tree.findMax());
-        // this._pseudocode.steps.push({ index: 8, lastStep: 1 });
-        // this._pseudocode.renderOperation(0, 'findMax');
-    }
-
-    _findSuccessorButtonHandler() {
-        if (this.operationsBlocked) return;
-        this.middlePart.classList.add('middle-part_find-node-mode');
-        this._findSuccessorButton.classList.add('task__option_find-node-mode');
-        this.canvas.addEventListener('click', this._findSuccessorFunctionObject);
+        this._pseudocode.initializeFindMax();
+        this._tree.findMax();
+        this._pseudocode.renderOperation(0, 'findMax');
     }
 
     _findPredecessorButtonHandler() {
@@ -55,32 +46,21 @@ export default class AdditionalOperations {
         this.canvas.addEventListener('click', this._findPredecessorFunctionObject);
     }
 
-    _findSuccessor() {
-        if (event.target.closest(".node")) {
-            this._treeCanvas.clearTraversedNodes();
-            this._pseudocode.initializeFindSuccessor();
-            let node; // to define
-            this._tree.findSuccessor(node);
-            // this._pseudocode.steps.push({ index: 8, lastStep: 1 });
-            // this._pseudocode.renderOperation(0, 'findSuccessor');
-            this.canvas.removeEventListener('click', this._findSuccessorFunctionObject);
-            this.middlePart.classList.remove('middle-part_find-node-mode');
-            this._findSuccessorButton.classList.remove('task__option_find-node-mode');
-        } else if (!event.target.classList.contains('js-find-successor-button')) {
-            this.canvas.removeEventListener('click', this._findSuccessorFunctionObject);
-            this.middlePart.classList.remove('middle-part_find-node-mode');
-            this._findSuccessorButton.classList.remove('task__option_find-node-mode');
-        }
+    _findSuccessorButtonHandler() {
+        if (this.operationsBlocked) return;
+        this.middlePart.classList.add('middle-part_find-node-mode');
+        this._findSuccessorButton.classList.add('task__option_find-node-mode');
+        this.canvas.addEventListener('click', this._findSuccessorFunctionObject);
     }
 
     _findPredecessor() {
         if (event.target.closest(".node")) {
+            const nodeKey = Number.parseInt(event.target.closest(".node").id);
+            const node = this._tree.find(nodeKey);
             this._treeCanvas.clearTraversedNodes();
             this._pseudocode.initializeFindPredecessor();
-            let node; // to define
             this._tree.findPredecessor(node);
-            // this._pseudocode.steps.push({ index: 8, lastStep: 1 });
-            // this._pseudocode.renderOperation(0, 'findPredecessor');
+            this._pseudocode.renderOperation(0, 'findPredecessor');
             this.canvas.removeEventListener('click', this._findPredecessorFunctionObject);
             this.middlePart.classList.remove('middle-part_find-node-mode');
             this._findPredecessorButton.classList.remove('task__option_find-node-mode');
@@ -88,6 +68,24 @@ export default class AdditionalOperations {
             this.canvas.removeEventListener('click', this._findPredecessorFunctionObject);
             this.middlePart.classList.remove('middle-part_find-node-mode');
             this._findPredecessorButton.classList.remove('task__option_find-node-mode');
+        }
+    }
+
+    _findSuccessor() {
+        if (event.target.closest(".node")) {
+            const nodeKey = Number.parseInt(event.target.closest(".node").id);
+            const node = this._tree.find(nodeKey);
+            this._treeCanvas.clearTraversedNodes();
+            this._pseudocode.initializeFindSuccessor();
+            this._tree.findSuccessor(node);
+            this._pseudocode.renderOperation(0, 'findSuccessor');
+            this.canvas.removeEventListener('click', this._findSuccessorFunctionObject);
+            this.middlePart.classList.remove('middle-part_find-node-mode');
+            this._findSuccessorButton.classList.remove('task__option_find-node-mode');
+        } else if (!event.target.classList.contains('js-find-successor-button')) {
+            this.canvas.removeEventListener('click', this._findSuccessorFunctionObject);
+            this.middlePart.classList.remove('middle-part_find-node-mode');
+            this._findSuccessorButton.classList.remove('task__option_find-node-mode');
         }
     }
 }

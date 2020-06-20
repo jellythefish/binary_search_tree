@@ -6,15 +6,15 @@ import "./images/branch-right.svg"
 import * as Switch from './blocks/content/upper-toolbar/switch/switch.js';
 import * as Theory from './blocks/content/middle-part/theory/theory.js';
 import * as PseudocodeElements from './blocks/content/middle-part/pseudocode/pseudocode.js';
-import Tree from './scripts/Tree';
-import TreeNode from './scripts/TreeNode';
-import TreeCanvas from "./scripts/TreeCanvas";
-import Pseudocode from './scripts/Pseudocode';
-import TimeController from './scripts/TimeController';
-import BasicOperations from "./scripts/BasicOperations";
-import Menu from "./scripts/Menu";
-import Traversals from "./scripts/Traversals";
-import AdditionalOperations from "./scripts/AdditionalOperations";
+import Tree from './js/components/Tree';
+import TreeNode from './js/components/TreeNode';
+import TreeCanvas from "./js/components/TreeCanvas";
+import Pseudocode from './js/components/Pseudocode';
+import TimeController from './js/components/TimeController';
+import BasicOperations from "./js/components/BasicOperations";
+import Menu from "./js/components/Menu";
+import Traversals from "./js/components/Traversals";
+import AdditionalOperations from "./js/components/AdditionalOperations";
 
 Switch.circle.addEventListener('mousedown', Switch.mousedownCircleHandler);
 window.addEventListener('mouseup', Switch.mouseupCircleHandler);

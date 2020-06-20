@@ -16,24 +16,36 @@ export default class Traversals {
     _inOrderTraversal() {
         this._treeCanvas.clearTraversedNodes();
         this._pseudocode.initializeInOrderTraversal();
-        this._tree.inOrderTraversal();
-        this._pseudocode.steps.push({ index: 8, lastStep: 1 });
-        this._pseudocode.renderOperation(0, 'inorder');
+        try {
+            this._tree.inOrderTraversal();
+            this._pseudocode.steps.push({ index: 7, lastStep: 1 });
+            this._pseudocode.renderOperation(0, 'inorder');
+        } catch (e) {
+            alert(e.message);
+        }
     }
 
     _preOrderTraversal() {
         this._treeCanvas.clearTraversedNodes();
         this._pseudocode.initializePreOrderTraversal();
-        this._tree.preOrderTraversal();
-        this._pseudocode.steps.push({ index: 8, lastStep: 1 });
-        this._pseudocode.renderOperation(0, 'preorder');
+        try {
+            this._tree.preOrderTraversal();
+            this._pseudocode.steps.push({ index: 7, lastStep: 1 });
+            this._pseudocode.renderOperation(0, 'preorder');
+        } catch (e) {
+            alert(e.message);
+        } 
     }
 
     _postOrderTraversal() {
         this._treeCanvas.clearTraversedNodes();
         this._pseudocode.initializePostOrderTraversal();
-        this._tree.postOrderTraversal();
-        this._pseudocode.steps.push({ index: 8, lastStep: 1 });
-        this._pseudocode.renderOperation(0, 'postorder');
+        try {
+            this._tree.postOrderTraversal();
+            this._pseudocode.steps.push({ index: 7, lastStep: 1 });
+            this._pseudocode.renderOperation(0, 'postorder');
+        } catch (e) {
+            alert(e.message);
+        }
     }
 }

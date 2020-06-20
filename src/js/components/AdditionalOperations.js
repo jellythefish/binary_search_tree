@@ -25,18 +25,26 @@ export default class AdditionalOperations {
 
     _findMin() {
         if (this.operationsBlocked) return;
-        this._treeCanvas.clearTraversedNodes();
-        this._pseudocode.initializeFindMin();
-        this._tree.findMin();
-        this._pseudocode.renderOperation(0, 'findMin');
+        try {
+            this._tree.findMin();
+            this._treeCanvas.clearTraversedNodes();
+            this._pseudocode.initializeFindMin();
+            this._pseudocode.renderOperation(0, 'findMin');
+        } catch (e) {
+            alert(e.message);
+        }
     }
 
     _findMax() {
         if (this.operationsBlocked) return;
-        this._treeCanvas.clearTraversedNodes();
-        this._pseudocode.initializeFindMax();
-        this._tree.findMax();
-        this._pseudocode.renderOperation(0, 'findMax');
+        try {
+            this._tree.findMax();
+            this._treeCanvas.clearTraversedNodes();
+            this._pseudocode.initializeFindMax();
+            this._pseudocode.renderOperation(0, 'findMax');
+        } catch (e) {
+            alert(e.message)
+        }
     }
 
     _findPredecessorButtonHandler() {

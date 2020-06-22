@@ -13,6 +13,7 @@ export default class Menu {
         this._loadConfigButton = document.querySelector('.js-load-config');
         this._menu = document.querySelector('.menu')
         this._suboptions = document.querySelector('.menu__suboptions')
+        this._uploadedFile = document.getElementById('config-upload');
 
         this._randomTreeNodeNumber = 6;
             
@@ -23,7 +24,7 @@ export default class Menu {
         this._createMiddleTreeButton.addEventListener('click', this._createMiddleCaseTree.bind(this));
         this._createBestTreeButton.addEventListener('click', this._createBestCaseTree.bind(this));
         this._saveConfigButton.addEventListener('click', this._saveConfig.bind(this));
-        this._loadConfigButton.addEventListener('click', this._loadConfig.bind(this));
+        this._uploadedFile.addEventListener('change', this._fileUploaderHandler.bind(this));
     }
 
     _createRandomTree() {
@@ -91,11 +92,54 @@ export default class Menu {
     }
 
     _saveConfig() {
-
+        if (!this._tree.root) return alert('В дереве нет ни одной вершины');
+        const json = JSON.stringify(this._generateJSON());
+        const a = document.createElement("a");
+        const file = new Blob([json], {type: 'text/plain'});
+        a.href = URL.createObjectURL(file);
+        a.download = 'tree.txt';
+        a.click()
     }
 
-    _loadConfig() {
+    _generateJSON() {
+        return deepCopyFunction(this._tree.root);
+        function deepCopyFunction(inObject) {
+            let outObject, value, key
+          
+            if (typeof inObject !== "object" || inObject === null) {
+              return inObject;
+            }
+            outObject = {};
+            for (key in inObject) {
+                if (key === 'key' || key === 'rightChild' || key === 'leftChild') {
+                    value = inObject[key] 
+                    outObject[key] = deepCopyFunction(value);
+                }
+            }
+            return outObject
+        }
+    }
 
+    _fileUploaderHandler(event) {
+        const file = this._uploadedFile.files[0];
+        const reader = new FileReader(); 
+        reader.addEventListener('loadend', this._loadedFileHandler.bind(this)); 
+        reader.readAsText(file); 
+    }
+
+    _loadedFileHandler(event) {
+        const txtString = event.target.result;
+        const json = JSON.parse(txtString);
+        this._tree.root = null;
+        this.generateTree(json, null);  
+        this._treeCanvas.clearCanvas();
+        this._treeCanvas.renderTree(this._tree.root);
+    }
+
+    generateTree(node) {
+        this._tree.insert(new this._TreeNode(node.key));
+        if (node.leftChild) this.generateTree(node.leftChild);
+        if (node.rightChild) this.generateTree(node.rightChild);
     }
 
     _menuButtonHandler(event) {

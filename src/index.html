@@ -22,7 +22,13 @@
                             <button class="menu__button menu__button_option js-save-config">Сохранить конфигурацию</button>
                         </li>
                         <li class="menu__option-item">
-                            <button class="menu__button menu__button_option js-load-config">Загрузить конфигурацию...</button>
+                            <form id="config-form">
+                                <div class="menu__button menu__button_option js-load-config">
+                                    <label for="config-upload" style="cursor: pointer;">Загрузить конфигурацию...</label>
+                                </div>
+                                <input id="config-upload" type="file" style = "display: none;">
+                                <!-- <button class="menu__button menu__button_option js-load-config">Загрузить конфигурацию...</button> -->
+                            </form>
                         </li>
                     </ul>
                     <ul class="menu__suboptions">
@@ -65,7 +71,7 @@
                             <h4 class="avl__title">AVL-Дерево</h4>
                         </div>
                     </div>
-                    <div class="tasks-list" style="margin: 0 auto 0;">
+                    <div class="tasks-list">
                         <div class="task">
                             <button class="task__button">
                                 Операции обхода дерева

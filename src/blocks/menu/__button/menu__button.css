@@ -7,6 +7,10 @@
     background-color: rgba(196, 196, 196, 0.5);
     border: 1px solid rgba(239, 228, 221, 0.64);
     transition: background-color 0.4s linear 0s;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .menu__button:hover {

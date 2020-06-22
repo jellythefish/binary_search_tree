@@ -27,7 +27,6 @@
                                     <label for="config-upload" style="cursor: pointer;">Загрузить конфигурацию...</label>
                                 </div>
                                 <input id="config-upload" type="file" style = "display: none;">
-                                <!-- <button class="menu__button menu__button_option js-load-config">Загрузить конфигурацию...</button> -->
                             </form>
                         </li>
                     </ul>
@@ -46,7 +45,7 @@
                         </li>
                     </ul>
                 </menu>
-                <a class="header__link" href="#">Как пользоваться</a>
+                <a class="header__link">Как пользоваться</a>
                 <h1 class="header__title">Двоичное дерево поиска</h1>
                 <div class="header__languages">
                     <a class="header__lang header__lang_current" href='./index.html'>Ru</a>
@@ -144,7 +143,6 @@
 
                     <div class="basic-operations">
                         <h3 class="basic-operations__title">Основные операции</h3>
-                        <p class="basic-operations__avl-status">(AVL)</h4>
                         <div class="basic-operations__operation">
                             <img class="basic-operations__img basic-operations__img_leaf" src="<%= require('./images/leaf.png').default %>" alt="leaf">
                             <input type="number" class="basic-operations__input basic-operations__input_leaf">
@@ -161,7 +159,6 @@
                         </div>
                         <button class="basic-operations__button basic-operations__button_open"></button>
                     </div>
-
 
                     <div class="theory">
                         <div class="theory__content"></div>
@@ -208,6 +205,14 @@
                         </div>
                     </div>
 
+                </section>
+
+                <section class="popup">
+                    <div class="popup__overlay"></div>
+                    <div class="popup__content">
+                        <img src="<%= require('./images/popup-info.svg').default %>" alt="Как пользоваться - информация" class="popup__svg">
+                        <img src="<%= require('./images/closing-cross.svg').default %>" alt="Закрыть окно" class="popup__close">
+                    </div>
                 </section>
             </main>
         

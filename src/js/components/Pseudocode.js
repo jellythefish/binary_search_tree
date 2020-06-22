@@ -21,7 +21,8 @@ export default class Pseudocode {
         this._treeCanvas.clearTraversedNodes();
         this.paused = false;
         this._timeController.unblockControllers();
-        if (type === 'remove' || type === 'inorder' || type === 'preorder' || type === 'postorder') this._timeController.blockControllers();
+        // if (type === 'remove' || type === 'inorder' || type === 'preorder' || type === 'postorder') this._timeController.blockControllers();
+        if (type === 'remove') this._timeController.blockControllers();
         this._index = index;
         this._treeCanvas.steps = this.steps;
         this._treeCanvas.latestInsertedNode = null;

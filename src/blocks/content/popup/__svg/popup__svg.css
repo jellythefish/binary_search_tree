@@ -1,0 +1,7 @@
+.popup__svg {
+    position: absolute;
+    left: calc((1440px - 949px) / 2);
+    top: 100px;
+    width: 949px;
+    height: 739px;
+}

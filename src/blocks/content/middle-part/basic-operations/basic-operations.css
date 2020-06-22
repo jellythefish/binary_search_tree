@@ -3,7 +3,6 @@
 @import url(./__operation/basic-operations__operation.css);
 @import url(./__operation-title/basic-operations__operation-title.css);
 @import url(./__title/basic-operations__title.css);
-@import url(./__avl-status/basic-operations__avl-status.css);
 @import url(./__button/basic-operations__button.css);
 
 .basic-operations {

@@ -2,6 +2,7 @@
 @import url(./middle-part/middle-part.css);
 @import url(./lower-toolbar/lower-toolbar.css);
 @import url(./tree/tree.css);
+@import url(./popup/popup.css);
 
 .content {
     padding-top: 9px;

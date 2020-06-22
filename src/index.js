@@ -41,15 +41,11 @@ pseudocode.linkBasicOperations(basicOperations);
 const traversals = new Traversals(tree, treeCanvas, pseudocode);
 const additionalOperations = new AdditionalOperations(tree, treeCanvas, pseudocode);
 
-// tree.insert(new TreeNode(50));
-// tree.insert(new TreeNode(25));
-// tree.insert(new TreeNode(100));
-// tree.insert(new TreeNode(75));
-// tree.insert(new TreeNode(125));
-// tree.insert(new TreeNode(55));
-// tree.insert(new TreeNode(85));
-// tree.insert(new TreeNode(53));
-// tree.insert(new TreeNode(60));
-// tree.insert(new TreeNode(52));
-// tree.insert(new TreeNode(54));
-// treeCanvas.renderTree(tree.root);
+const popup = document.querySelector('.popup');
+const popupOpenButton = document.querySelector('.header__link');
+popupOpenButton.addEventListener('click', popupHandler);
+const closePopupButton = document.querySelector('.popup__close');
+closePopupButton.addEventListener('click', popupHandler);
+function popupHandler(event) {
+    popup.classList.toggle('popup_is-opened');
+}

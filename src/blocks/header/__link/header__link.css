@@ -12,6 +12,7 @@
     -webkit-font-smoothing: antialiased;
     opacity: 1;
     transition: opacity 0.4s linear 0s;
+    cursor: pointer;
 }
 
 .header__link:hover {

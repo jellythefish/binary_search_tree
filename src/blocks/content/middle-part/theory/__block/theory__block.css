@@ -1,0 +1,6 @@
+@import url(./_hidden/theory__block_hidden.css);
+
+.theory__block {
+    display: block;  
+    margin: 10px auto 0; 
+}

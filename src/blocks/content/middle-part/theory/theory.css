@@ -1,5 +1,8 @@
 @import url(./__button/theory__button.css);
 @import url(./__content/theory__content.css);
+@import url(./__next/theory__next.css);
+@import url(./__prev/theory__prev.css);
+@import url(./__block/theory__block.css);
 
 .theory {
     position: absolute;

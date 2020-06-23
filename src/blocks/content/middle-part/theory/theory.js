@@ -1,5 +1,31 @@
 const theoryWindow = document.querySelector(".theory");
 const theoryButton = document.querySelector(".theory__button");
+const blockNext = document.querySelector('.theory__next');
+const blockPrev = document.querySelector('.theory__prev');
+
+const blocks = document.querySelectorAll('.theory__block');
+
+let currentIndex = 0;
+const totalBlocks = 4;
+
+blockNext.addEventListener('click', nextHandler);
+blockPrev.addEventListener('click', prevHandler);
+
+function nextHandler(event) {
+    if (currentIndex + 1> totalBlocks) return;
+    blocks[currentIndex].classList.add('theory__block_hidden');
+    blocks[currentIndex + 1].classList.remove('theory__block_hidden');
+    ++currentIndex;
+}
+
+function prevHandler(event) {
+    if (currentIndex - 1 < 0) return;
+    blocks[currentIndex].classList.add('theory__block_hidden');
+    blocks[currentIndex - 1].classList.remove('theory__block_hidden');
+    --currentIndex;
+}
+
+
 let initialXTheory, newXTheory, currentTheoryWindowRightX, theoryButtonMoved = false;
 
 theoryButton.ondragstart = function() {

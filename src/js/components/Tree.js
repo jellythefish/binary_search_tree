@@ -307,7 +307,7 @@ export default class Tree {
                 return findMaxFromCurrentNode(currentNode.rightChild, pseudocode);
             }
             pseudocode.steps.push({ index: 5, lastStep: 0, currentNode });
-            pseudocode.steps.push({ index: 7, lastStep: 1, currentNode });
+            pseudocode.steps.push({ index: 8, lastStep: 1, currentNode });
             return currentNode;
         }
     }
@@ -342,7 +342,7 @@ export default class Tree {
                 return findMinFromCurrentNode(currentNode.leftChild, pseudocode);
             }
             pseudocode.steps.push({ index: 5, lastStep: 0, currentNode });
-            pseudocode.steps.push({ index: 7, lastStep: 1, currentNode });
+            pseudocode.steps.push({ index: 8, lastStep: 1, currentNode });
             return currentNode;
         }
     }

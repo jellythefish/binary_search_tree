@@ -287,10 +287,18 @@ export default class Tree {
             this._pseudocode.steps.push({ index: 1, lastStep: 0, currentNode: currentNode.leftChild });
             this._pseudocode.steps.push({ index: 2, lastStep: 0, currentNode: currentNode.leftChild });
             return findMaxFromCurrentNode(currentNode.leftChild, this._pseudocode);
+        } else {
+            let res = currentNode.parent;
+            this._pseudocode.steps.push({ index: 6, lastStep: 0, currentNode: res });
+            while (res && currentNode === res.leftChild) {
+                this._pseudocode.steps.push({ index: 6, lastStep: 0, currentNode: res });
+                currentNode = res;
+                res = res.parent; 
+            }
+            this._pseudocode.steps.push({ index: 7, lastStep: 0, currentNode: res });
+            this._pseudocode.steps.push({ index: 8, lastStep: 1, currentNode: res });
+            return res;
         }
-        this._pseudocode.steps.push({ index: 6, lastStep: 0, currentNode });
-        this._pseudocode.steps.push({ index: 7, lastStep: 1, currentNode });
-        return currentNode;
 
         function findMaxFromCurrentNode(currentNode, pseudocode) {
             pseudocode.steps.push({ index: 3, lastStep: 0, currentNode });
@@ -313,10 +321,19 @@ export default class Tree {
             this._pseudocode.steps.push({ index: 1, lastStep: 0, currentNode: currentNode.rightChild });
             this._pseudocode.steps.push({ index: 2, lastStep: 0, currentNode: currentNode.rightChild });
             return findMinFromCurrentNode(currentNode.rightChild, this._pseudocode);
+        } else {
+            let res = currentNode.parent;
+            this._pseudocode.steps.push({ index: 6, lastStep: 0, currentNode: res });
+            while (res && currentNode === res.rightChild) {
+                this._pseudocode.steps.push({ index: 6, lastStep: 0, currentNode: res });
+                currentNode = res;
+                res = res.parent; 
+            }
+            this._pseudocode.steps.push({ index: 7, lastStep: 0, currentNode: res });
+            this._pseudocode.steps.push({ index: 8, lastStep: 1, currentNode: res });
+            return res;
         }
-        this._pseudocode.steps.push({ index: 6, lastStep: 0, currentNode });
-        this._pseudocode.steps.push({ index: 7, lastStep: 1, currentNode });
-        return currentNode;
+      
 
         function findMinFromCurrentNode(currentNode, pseudocode) {
             pseudocode.steps.push({ index: 3, lastStep: 0, currentNode });

@@ -167,7 +167,7 @@ export default class Pseudocode {
         this._treeCanvas.currentOperation = 'findPredecessor';
         const lineConstants = PSEUDOCODE.findPredecessor;
         this._pseudocodeOperationTitle.textContent = 'Поиск предшественника'
-        this.container.style.height = '260px';
+        this.container.style.height = '320px';
         this.container.style.top = '400px';
         this._buttonClose.style.top = '53px';
         this._renderLines(lineConstants);
@@ -178,7 +178,7 @@ export default class Pseudocode {
         this._treeCanvas.currentOperation = 'findSuccessor';
         const lineConstants = PSEUDOCODE.findSuccessor;
         this._pseudocodeOperationTitle.textContent = 'Поиск преемника';
-        this.container.style.height = '260px';
+        this.container.style.height = '320px';
         this.container.style.top = '400px';
         this._buttonClose.style.top = '53px';
         this._renderLines(lineConstants);

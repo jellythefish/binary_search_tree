@@ -98,7 +98,8 @@ const findPredecessor = [
     { text: 'У текущей вершины есть правый ребенок?', indentLevel: 2, highlightColor: '#e7d0ad' }, 
     { text: 'Есть: переходим в него.', indentLevel: 3, highlightColor: '#ECDABF' }, 
     { text: 'Нет: максимумом и предшественником является текущая вершина.', indentLevel: 3, highlightColor: '#ECDABF' }, 
-    { text: 'Нет: текущая вершина является предшественником.', indentLevel: 1, highlightColor: '#ECDABF' }, 
+    { text: 'Нет: следуем вверх, пока не встретим вершину, которая является правым ребенком своего родителя.', indentLevel: 1, highlightColor: '#ECDABF' }, 
+    { text: 'Данная вершина является правым ребенком своего родителя и искомым предшественником.', indentLevel: 1, highlightColor: '#ECDABF' }, 
     { text: 'Поиск закончен.', indentLevel: 0, highlightColor: '#e7d0ad' }, 
 ];
 
@@ -109,7 +110,8 @@ const findSuccessor = [
     { text: 'У текущей вершины есть левый ребенок?', indentLevel: 2, highlightColor: '#e7d0ad' }, 
     { text: 'Есть: переходим в него.', indentLevel: 3, highlightColor: '#ECDABF' }, 
     { text: 'Нет: минимумом и преемником является текущая вершина.', indentLevel: 3, highlightColor: '#ECDABF' }, 
-    { text: 'Нет: текущая вершина является преемником.', indentLevel: 1, highlightColor: '#ECDABF' }, 
+    { text: 'Нет: следуем вверх, пока не встретим вершину, которая является левым ребенком своего родителя.', indentLevel: 1, highlightColor: '#ECDABF' }, 
+    { text: 'Данная вершина является левым ребенком своего родителя и искомым преемником.', indentLevel: 1, highlightColor: '#ECDABF' }, 
     { text: 'Поиск закончен.', indentLevel: 0, highlightColor: '#e7d0ad' }, 
 ];
 

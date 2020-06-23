@@ -25,10 +25,10 @@ export default class AdditionalOperations {
 
     _findMin() {
         if (this.operationsBlocked) return;
+        this._treeCanvas.clearTraversedNodes();
+        this._pseudocode.initializeFindMin();
         try {
             this._tree.findMin();
-            this._treeCanvas.clearTraversedNodes();
-            this._pseudocode.initializeFindMin();
             this._pseudocode.renderOperation(0, 'findMin');
         } catch (e) {
             alert(e.message);
@@ -37,10 +37,10 @@ export default class AdditionalOperations {
 
     _findMax() {
         if (this.operationsBlocked) return;
+        this._treeCanvas.clearTraversedNodes();
+        this._pseudocode.initializeFindMax();
         try {
             this._tree.findMax();
-            this._treeCanvas.clearTraversedNodes();
-            this._pseudocode.initializeFindMax();
             this._pseudocode.renderOperation(0, 'findMax');
         } catch (e) {
             alert(e.message)
